@@ -1,6 +1,12 @@
-# Hệ thống AI tư vấn ngành học phù hợp
+# 🎓 Hệ thống AI Tư Vấn Ngành Học Phù Hợp
+
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Major_Recommendation-blue)](https://github.com/phamtam091069-glitch/Major_Recommendation)
+[![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Python](https://img.shields.io/badge/Python-3.10+-blue)]()
 
 Ứng dụng web **Flask** gợi ý **Top 3 ngành đại học** dựa trên hồ sơ học sinh (biểu mẫu + mô tả tự do). Phù hợp demo đồ án, tiểu luận hoặc mở rộng thêm dữ liệu thực tế.
+
+**📍 GitHub Repository:** [https://github.com/phamtam091069-glitch/Major_Recommendation](https://github.com/phamtam091069-glitch/Major_Recommendation)
 
 ## Đầu vào người dùng
 
@@ -58,13 +64,19 @@ UI hiển thị dạng:
 
 - `Độ tin cậy: 78/100 (Cao) · Chênh ngành kế tiếp: +0.0123 điểm thô`
 
-## Danh sách ngành (15 lớp)
+## Danh sách ngành (73 ngành)
 
-Nhãn dùng trong dữ liệu/model:
+Hệ thống hỗ trợ **73 ngành đại học** phân loại theo các nhóm chính:
 
-- Công nghệ thông tin, Khoa học dữ liệu, Quản trị kinh doanh, Marketing, Thiết kế đồ họa
-- Điều dưỡng, Ngôn ngữ Anh, Luật, Sư phạm, Hệ thống thông tin quản lý
-- Kế toán tài chính, Du lịch và lữ hành, Báo chí và truyền thông, Kiến trúc, Kỹ thuật cơ khí
+### 🏢 Các Nhóm Ngành Chính
+
+| Nhóm                                              | Số Lượng | Ví Dụ Ngành                                                                                                                 |
+| ------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Công nghệ - Kỹ thuật**                          | 15+      | Công nghệ thông tin, Khoa học dữ liệu, Kỹ thuật phần mềm, Kỹ thuật cơ khí, Hệ thống thông tin, Tự động hóa, ...             |
+| **Kinh doanh - Tài chính - Quản trị**             | 15+      | Quản trị kinh doanh, Marketing, Kế toán tài chính, Kinh doanh quốc tế, Logistics, Quản lý khách sạn, ...                    |
+| **Xã hội - Nhân văn - Giáo dục - Luật**           | 15+      | Sư phạm (Toán, Lý, Hóa, Sinh, Địa, Sử), Luật, Ngôn ngữ Anh, Ngôn ngữ Hán, Ngôn ngữ Nhật, Ngôn ngữ Trung, ...                |
+| **Sức khỏe - Dịch vụ cộng đồng**                  | 12+      | Điều dưỡng, Y học, Dược học, Kỹ thuật xét nghiệm y học, Dinh dưỡng, Tâm lý học, ...                                         |
+| **Sáng tạo - Truyền thông - Du lịch - Kiến trúc** | 15+      | Thiết kế đồ họa, Du lịch và lữ hành, Báo chí truyền thông, Kiến trúc, Thiết kế nội thất, Thiết kế thời trang, Mỹ thuật, ... |
 
 JSON trả về có `top_3[].nganh` theo nhãn model (không dấu), ví dụ: `Ke toan tai chinh`, `Du lich va lu hanh`.
 
@@ -229,8 +241,156 @@ major-recommendation/
 └── tests/
 ```
 
-## Ghi chú
+## 🚀 Deployment
+
+### PythonAnywhere (Khuyến nghị)
+
+Xem hướng dẫn chi tiết: **`PYTHONANYWHERE_DEPLOYMENT_GUIDE.md`**
+
+Quick start (5 phút):
+
+1. Đăng ký: https://www.pythonanywhere.com
+2. Upload code via Git clone
+3. Tạo web app, config WSGI
+4. Reload và truy cập URL public
+
+### Replit
+
+Xem hướng dẫn chi tiết: **`REPLIT_DEPLOYMENT_GUIDE.md`**
+
+Quick start:
+
+1. Import từ GitHub: https://github.com/phamtam091069-glitch/Major_Recommendation
+2. Cài dependencies: `pip install -r requirements.txt`
+3. Run: `python app.py`
+4. Truy cập link public Replit
+
+## 📚 Tài Liệu Hướng Dẫn
+
+Các file hướng dẫn trong project:
+
+| File                                 | Mục Đích                           |
+| ------------------------------------ | ---------------------------------- |
+| `README.md`                          | Tổng quan project (file này)       |
+| `GITHUB_SETUP_GUIDE.md`              | Cách setup GitHub account          |
+| `PYTHONANYWHERE_QUICK_START.md`      | Deployment PythonAnywhere (5 phút) |
+| `PYTHONANYWHERE_DEPLOYMENT_GUIDE.md` | Hướng dẫn PythonAnywhere chi tiết  |
+| `REPLIT_QUICK_START.md`              | Deployment Replit (5 phút)         |
+| `REPLIT_DEPLOYMENT_GUIDE.md`         | Hướng dẫn Replit chi tiết          |
+
+## 🔗 GitHub Information
+
+**Tài Khoản:** phamtam091069-glitch  
+**Email:** phamtam091069@gmail.com  
+**Repository:** https://github.com/phamtam091069-glitch/Major_Recommendation  
+**Trạng Thái:** Public (có thể deploy trên Replit/PythonAnywhere)
+
+### Cách Push Code Lên GitHub
+
+```bash
+# 1. Add remote (nếu chưa làm)
+git remote add origin https://github.com/phamtam091069-glitch/Major_Recommendation.git
+
+# 2. Rename branch
+git branch -M main
+
+# 3. Push code
+git push -u origin main
+```
+
+### Cách Update Sau Khi Thay Đổi Code
+
+```bash
+# 1. Stage changes
+git add .
+
+# 2. Commit
+git commit -m "Describe your changes"
+
+# 3. Push to GitHub
+git push origin main
+```
+
+## 🔧 Environment Variables
+
+Tạo file `.env` trong thư mục project với các biến sau:
+
+```env
+# API Keys (optional - dùng cho fallback)
+ANTHROPIC_API_KEY=your_claude_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+
+# Flask
+SECRET_KEY=your_secret_key_here
+FLASK_ENV=production
+```
+
+## 📊 Project Statistics
+
+- **Total Files:** 290+
+- **Total Lines of Code:** 99,800+
+- **Languages:** Python, JavaScript, HTML, CSS
+- **ML Models:** CalibratedRandomForest, CalibratedLogisticRegression
+- **Major Classes:** 73 ngành học
+- **Endpoints:** 8 API endpoints
+- **Support Categories:** 5 nhóm ngành chính
+
+## 🎯 Architecture Overview
+
+### Technology Stack
+
+- **Backend:** Flask (Python 3.10+)
+- **ML:** scikit-learn (Random Forest, Logistic Regression)
+- **Text Processing:** TF-IDF, cosine similarity
+- **Data:** pandas, numpy
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+
+### Key Components
+
+1. **`app.py`** - Flask application & API endpoints
+2. **`utils/predictor.py`** - ML model & scoring logic
+3. **`utils/chatbot.py`** - AI chatbot functionality
+4. **`train_model.py`** - Model training pipeline
+5. **`templates/index.html`** - Main form UI
+6. **`static/script.js`** - Frontend logic & data normalization
+
+## 🐛 Troubleshooting
+
+### Model Not Loading
+
+```bash
+# Retrain model
+python train_model.py
+```
+
+### Data Format Issues
+
+```bash
+# Check & clean data
+python data/audit_dataset.py
+```
+
+### Text Encoding Problems
+
+- Frontend automatically normalizes Vietnamese diacritics
+- Check `static/script.js` for normalization logic
+
+## 📝 Ghi Chú
 
 - Dữ liệu synthetic có thể cho metric cao nhưng không phản ánh hoàn toàn dữ liệu thực tế.
 - Khi sửa dữ liệu hoặc logic chấm điểm, nên train lại bằng `python train_model.py`.
 - Kiểm tra nhanh trạng thái model bằng `GET /health`.
+- Git history được lưu tự động, có thể revert thay đổi nếu cần.
+
+## 📞 Support & Contribution
+
+- Repository: https://github.com/phamtam091069-glitch/Major_Recommendation
+- Issues & PRs: Chào mừng các đóng góp!
+- Contact: phamtam091069@gmail.com
+
+---
+
+**Last Updated:** April 24, 2026  
+**Version:** 1.0  
+**Status:** Production Ready ✅
