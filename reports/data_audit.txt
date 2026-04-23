@@ -1,0 +1,47 @@
+=== DATA QUALITY AUDIT ===
+Dataset: data\raw\students.csv
+Rows: 270 | Cols: 9
+
+[1] Class distribution
+So lop: 15 | min=18 | max=18 | imbalance_ratio=1.00
+  - Luat: 18 (6.67%)
+  - Quan tri kinh doanh: 18 (6.67%)
+  - Marketing: 18 (6.67%)
+  - Bao chi va truyen thong: 18 (6.67%)
+  - Ke toan tai chinh: 18 (6.67%)
+  - Ngon ngu Anh: 18 (6.67%)
+  - Du lich va lu hanh: 18 (6.67%)
+  - Cong nghe thong tin: 18 (6.67%)
+  - Dieu duong: 18 (6.67%)
+  - Su pham: 18 (6.67%)
+  - Kien truc: 18 (6.67%)
+  - Ky thuat co khi: 18 (6.67%)
+  - Thiet ke do hoa: 18 (6.67%)
+  - He thong thong tin quan ly: 18 (6.67%)
+  - Khoa hoc du lieu: 18 (6.67%)
+
+[2] Missing / empty-like theo cot
+  - so_thich_chinh: missing_na=0, empty_like=0
+  - mon_hoc_yeu_thich: missing_na=0, empty_like=0
+  - ky_nang_noi_bat: missing_na=0, empty_like=0
+  - tinh_cach: missing_na=0, empty_like=0
+  - moi_truong_lam_viec_mong_muon: missing_na=0, empty_like=0
+  - muc_tieu_nghe_nghiep: missing_na=0, empty_like=0
+  - mo_ta_ban_than: missing_na=0, empty_like=0
+  - dinh_huong_tuong_lai: missing_na=0, empty_like=0
+  - nganh_phu_hop: missing_na=0, empty_like=0
+
+[3] Duplicate rows: 0
+
+[4] Text length stats
+  - mo_ta_ban_than: min=18, median=26.0, max=46, too_short(<=3)=0
+  - dinh_huong_tuong_lai: min=11, median=14.0, max=17, too_short(<=3)=0
+
+[5] Low-frequency categories (<3 mau)
+  - Khong co
+
+[6] Numeric outlier (IQR)
+  - Khong co cot numeric de kiem tra
+
+[7] Recommendations
+  - Khong phat hien van de nghiem trong. Nen tiep tuc theo doi metric macro-F1 sau moi lan cap nhat du lieu.

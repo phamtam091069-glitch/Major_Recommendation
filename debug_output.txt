@@ -1,0 +1,159 @@
+﻿
+================================================================================
+SCORING DISCREPANCY DEBUG - COMPLETE PIPELINE
+================================================================================
+Test Profile: {
+  "so_thich_chinh": "Nghß╗ç thuß║¡t",
+  "mon_hoc_yeu_thich": "V─ân",
+  "ky_nang_noi_bat": "S├íng tß║ío",
+  "tinh_cach": "Tß╗ë mß╗ë",
+  "moi_truong_lam_viec_mong_muon": "Linh hoß║ít",
+  "muc_tieu_nghe_nghiep": "Theo ─æam m├¬",
+  "mo_ta_ban_than": "Em th├¡ch thiß║┐t kß║┐ nß╗Öi thß║Ñt, l├¬n kß║┐ hoß║ích bß╗æ cß╗Ñc kh├┤ng gian mß╗Öt c├ích chi tiß║┐t.",
+  "dinh_huong_tuong_lai": "Em muß╗æn trß╗ƒ th├ánh designer nß╗Öi thß║Ñt chuy├¬n nghiß╗çp."
+}
+Γ£ô Model loaded successfully
+
+================================================================================
+TEST 1: INPUT NORMALIZATION
+================================================================================
+
+Γ£ô Normalized payload:
+  so_thich_chinh: nghe thuat
+  mon_hoc_yeu_thich: van
+  ky_nang_noi_bat: sang tao
+  tinh_cach: ti mi
+  moi_truong_lam_viec_mong_muon: linh hoat
+  muc_tieu_nghe_nghiep: theo ─æam me
+  mo_ta_ban_than: em thich thiet ke noi that len ke hoach bo cuc khong gian mot cach chi tiet
+  dinh_huong_tuong_lai: em muon tro thanh designer noi that chuyen nghiep
+
+================================================================================
+TEST 2: FEATURE EXTRACTION
+================================================================================
+
+Γ£ô Testing OneHot Encoding (6 categorical fields):
+  Shape: (1, 49)
+  Sparse matrix density: 10.20%
+
+Γ£ô Testing TF-IDF Vectorization (2 text fields):
+  Text: 'em thich thiet ke noi that len ke hoach bo cuc khong gian mot cach chi tiet em m...'
+  Shape: (1, 1200)
+  Sparse matrix density: 2.33%
+
+================================================================================
+TEST 3: MODEL PREDICTIONS
+================================================================================
+
+Γ£ô Combined feature shape: (1, 1249)
+  Total features: 1249
+
+Γ£ô Model probability output (top 10 majors):
+  61. H╞░ß╗¢ng dß║½n du lß╗ïch                        = 0.9125
+  13. Marketing                                = 0.0490
+  59. Du lß╗ïch                                  = 0.0028
+   2. Khoa hß╗ìc dß╗» liß╗çu                         = 0.0007
+  60. Quß║ún trß╗ï dß╗ïch vß╗Ñ du lß╗ïch v├á lß╗» h├ánh      = 0.0006
+  45. Y hß╗ìc cß╗ò truyß╗ün                          = 0.0006
+  14. Th╞░╞íng mß║íi ─æiß╗çn tß╗¡                       = 0.0006
+  62. Thiß║┐t kß║┐ game                            = 0.0006
+  20. Kinh doanh quß╗æc tß║┐                       = 0.0006
+  33. T├óm l├╜ hß╗ìc                               = 0.0005
+
+  ≡ƒÆí Interior Design (Thiet ke noi that):
+     Rank: 58 / 71
+     Probability: 0.0005
+
+================================================================================
+TEST 4: CRITERIA SCORING (8 weights)
+================================================================================
+
+Γ£ô Criteria Weights:
+  so_thich_chinh                      = 23.00%
+  dinh_huong_tuong_lai                = 20.00%
+  ky_nang_noi_bat                     = 16.00%
+  tinh_cach                           = 14.00%
+  moi_truong_lam_viec_mong_muon       = 12.00%
+  mon_hoc_yeu_thich                   = 8.00%
+  mo_ta_ban_than                      = 4.00%
+  muc_tieu_nghe_nghiep                = 3.00%
+  TOTAL                               = 100.00%
+
+Γ£ô Your Input Values:
+  so_thich_chinh                      = nghe thuat
+  dinh_huong_tuong_lai                = em muon tro thanh designer noi that chuyen nghiep
+  ky_nang_noi_bat                     = sang tao
+  tinh_cach                           = ti mi
+  moi_truong_lam_viec_mong_muon       = linh hoat
+  mon_hoc_yeu_thich                   = van
+  mo_ta_ban_than                      = em thich thiet ke noi that len ke hoach bo cuc khong gian mo
+  muc_tieu_nghe_nghiep                = theo ─æam me
+
+================================================================================
+TEST 5: FULL PREDICTION (End-to-End)
+================================================================================
+
+Γ£ô Prediction Result:
+  Total majors ranked: 3
+
+  1. Thiß║┐t kß║┐ nß╗Öi thß║Ñt
+     Score: 41.79
+     Model Score: 57.6600
+     Criteria Score: 17.9700
+     Formula: 0.6 ├ù 57.6600 + 0.4 ├ù 17.9700 = 41.79
+
+  2. Kiß║┐n tr├║c
+     Score: 11.04
+     Model Score: 0.8900
+     Criteria Score: 26.2800
+     Formula: 0.6 ├ù 0.8900 + 0.4 ├ù 26.2800 = 11.04
+
+  3. S╞░ phß║ím Tin hß╗ìc
+     Score: 10.25
+     Model Score: 0.0300
+     Criteria Score: 25.5700
+     Formula: 0.6 ├ù 0.0300 + 0.4 ├ù 25.5700 = 10.25
+
+Γ£ô Verifying Formula: 0.6 ├ù model_score + 0.4 ├ù criteria_score
+  Γ£ô Item 1: 41.79 vs calculated 41.78
+  Γ£ô Item 2: 11.04 vs calculated 11.05
+  Γ£ô Item 3: 10.25 vs calculated 10.25
+
+================================================================================
+TEST 6: INTERIOR DESIGN SCORING ANALYSIS
+================================================================================
+
+Γ£ô Input Analysis:
+  So thich chinh: nghe thuat (should match 'Nghß╗ç thuß║¡t')
+  Ky nang noi bat: sang tao (should match 'S├íng tß║ío')
+  Tinh cach: ti mi (should match 'Tß╗ë mß╗ë')
+  Mo ta ban than: contains 'thiß║┐t kß║┐ nß╗Öi thß║Ñt'? False
+  Dinh huong tuong lai: contains 'designer nß╗Öi thß║Ñt'? False
+
+Γ£ô Expected Scoring:
+  - So thich chinh (Nghe thuat): 23% weight ΓåÆ Should match interior design
+  - Ky nang noi bat (Sang tao): 16% weight ΓåÆ Should match interior design
+  - Tinh cach (Tinh mi): 14% weight ΓåÆ Should match interior design
+  - Text similarity: TF-IDF should find 'thiet ke noi that' keywords
+
+Γ£ô Expected Result:
+  Interior Design should rank TOP 1-2 with HIGH score (>70%)
+
+================================================================================
+DEBUG SUMMARY
+================================================================================
+
+Γ£ô All components tested:
+  1. Input Normalization - Check if fields mapped correctly
+  2. Feature Extraction - Check OneHot & TF-IDF shapes
+  3. Model Predictions - Check probabilities
+  4. Criteria Scoring - Check weights sum to 100%
+  5. Full Pipeline - Check formula correctness
+  6. Interior Design - Check why score is low
+  
+Check if:
+  - Model probability for Interior Design is low (model issue)
+  - Criteria score calculation is wrong (weighting issue)
+  - Formula application is incorrect (0.6/0.4 split issue)
+  - Text matching not working (TF-IDF issue)
+    

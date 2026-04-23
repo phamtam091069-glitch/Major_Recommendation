@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI tư vấn ngành học phù hợp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body data-model-ready="{{ 'true' if model_ready else 'false' }}">
+  <!-- Loading Progress Bar -->
+  <div id="pageLoadingSpinner" class="page-loading-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-animated"></div>
+    </div>
+    <p class="loading-text">Đang tải...</p>
+  </div>
+
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__badge">AI Major Recommendation</div>
+      <h1>Khám phá <span>Top 3 ngành học phù hợp</span> với bạn</h1>
+      <p>
+        Hệ thống sử dụng mô hình lai giữa Machine Learning và Content-Based Matching
+        để đưa ra gợi ý ngành học sát với sở thích, kỹ năng và định hướng cá nhân.
+      </p>
+      <div class="hero__chips">
+        <span>Hybrid AI</span>
+        <span>RF hiệu chỉnh xác suất</span>
+        <span>TF-IDF + Cosine</span>
+        <span>So sánh DT / LR khi train</span>
+        <span>60+ ngành</span>
+      </div>
+    </header>
+
+    {% if not model_ready %}
+    <section class="alert alert--error">
+      <strong>Model chưa sẵn sàng.</strong>
+      <div>{{ model_error }}</div>
+      <div>Hãy chạy: <code>python train_model.py</code></div>
+    </section>
+    {% endif %}
+
+    <main class="layout">
+      <section class="card glass form-card">
+        <div class="card__title-row">
+          <h2>Hồ sơ học sinh</h2>
+          <p>Điền thông tin để AI phân tích</p>
+        </div>
+
+        <form id="predictionForm" class="form-grid">
+          <div class="field">
+            <label>Sở thích chính</label>
+            <select name="so_thich_chinh" required>
+              <option value="">Chọn...</option>
+              <option>Công nghệ</option>
+              <option>Cơ khí – Kỹ thuật chế tạo</option>
+              <option>Kinh doanh</option>
+              <option>Kế toán – Tài chính</option>
+              <option>Du lịch &amp; Dịch vụ</option>
+              <option>Truyền thông &amp; Báo chí</option>
+              <option>Nghệ thuật</option>
+              <option>Kiến trúc – Xây dựng</option>
+              <option>Sáng tạo nội dung &amp; Media</option>
+              <option>Y tế</option>
+              <option>Ngôn ngữ</option>
+              <option>Pháp lý</option>
+              <option>Giáo dục</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Môn học yêu thích</label>
+            <select name="mon_hoc_yeu_thich" required>
+              <option value="">Chọn...</option>
+              <option>Toán</option><option>Văn</option><option>Anh</option>
+              <option>Tin học</option><option>Sinh</option><option>Lý</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Kỹ năng nổi bật</label>
+            <select name="ky_nang_noi_bat" required>
+              <option value="">Chọn...</option>
+              <option>Phân tích dữ liệu</option>
+              <option>Giao tiếp</option>
+              <option>Thuyết trình</option>
+              <option>Sáng tạo</option>
+              <option>Lãnh đạo</option>
+              <option>Tổ chức &amp; lập kế hoạch</option>
+              <option>Tư duy logic</option>
+              <option>Giải quyết vấn đề</option>
+              <option>Cẩn thận</option>
+              <option>Làm việc nhóm</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Tính cách</label>
+            <select name="tinh_cach" required>
+              <option value="">Chọn...</option>
+              <option>Hướng nội</option>
+              <option>Hướng ngoại</option>
+              <option>Tỉ mỉ</option>
+              <option>Năng động</option>
+              <option>Kiên nhẫn</option>
+              <option>Kỷ luật</option>
+              <option>Trách nhiệm</option>
+              <option>Bản lĩnh</option>
+              <option>Quyết đoán</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Môi trường làm việc mong muốn</label>
+            <select name="moi_truong_lam_viec_mong_muon" required>
+              <option value="">Chọn...</option>
+              <option>Kỹ thuật</option>
+              <option>Xưởng / Nhà máy</option>
+              <option>Công trường</option>
+              <option>Văn phòng</option>
+              <option>Sáng tạo</option>
+              <option>Khách sạn &amp; Sự kiện</option>
+              <option>Bệnh viện</option>
+              <option>Trường học</option>
+              <option>Linh hoạt</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Mục tiêu nghề nghiệp</label>
+            <select name="muc_tieu_nghe_nghiep" required>
+              <option value="">Chọn...</option>
+              <option>Ổn định</option>
+              <option>Phát triển chuyên môn</option>
+              <option>Thu nhập cao</option>
+              <option>Theo đam mê</option>
+              <option>Trải nghiệm quốc tế</option>
+              <option>Khởi nghiệp</option>
+              <option>Cống hiến xã hội</option>
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label>Mô tả bản thân</label>
+            <textarea name="mo_ta_ban_than" rows="4" placeholder="Ví dụ: Em thích máy tính, kế toán, du lịch, kiến trúc, báo chí… (càng cụ thể càng tốt)"></textarea>
+          </div>
+
+          <div class="field field--full">
+            <label>Định hướng tương lai</label>
+            <textarea name="dinh_huong_tuong_lai" rows="4" placeholder="Ví dụ: Em muốn làm kế toán, hướng dẫn viên du lịch, kiến trúc sư, kỹ sư cơ khí, phóng viên…"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn--primary">Dự đoán ngay</button>
+            <button type="button" class="btn btn--ghost" id="randomDemoBtn">Mẫu đã có sẵn</button>
+            <button type="button" class="btn btn--chatbot" id="chatbotFormBtn" style="margin-left: auto;">💬 Hỏi Chatbot AI</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="card glass result-card">
+        <div class="card__title-row">
+          <h2>Kết quả tư vấn</h2>
+          <p>Top 3 ngành học tiềm năng nhất</p>
+        </div>
+
+        <div id="placeholder" class="placeholder">
+          <div class="placeholder__icon">🎓</div>
+          <h3>Sẵn sàng phân tích hồ sơ</h3>
+          <p>Điền thông tin ở bên trái và nhấn “Dự đoán ngay”.</p>
+        </div>
+
+        <div id="loading" class="loading hidden">
+           <div class="spinner"></div>
+           <span>AI đang phân tích hồ sơ của bạn...</span>
+        </div>
+
+        <div id="result" class="hidden">
+          <div id="top3"></div>
+           <div id="debugBox" class="debug-box hidden">
+             <h3>Debug: Top 5 điểm thô</h3>
+             <div id="debugTop5"></div>
+           </div>
+           <div class="insight-box">
+             <h3>Lý do gợi ý</h3>
+             <ul id="reasons"></ul>
+           </div>
+           <div id="feedbackStatsBox" class="feedback-stats-box hidden">
+             <h3>📊 Thống kê đánh giá cộng đồng</h3>
+             <div id="feedbackStats"></div>
+           </div>
+         </div>
+      </aside>
+     </main>
+
+     <!-- Floating Chat Button -->
+     <button id="chatFloatBtn" class="chat-float-btn" title="Mở chatbot">
+       💬
+     </button>
+
+       <!-- Chat Modal -->
+       <div id="chatModal" class="chat-modal hidden">
+        <div class="chat-container">
+         <!-- Chat Header -->
+         <div class="chat-header">
+           <h3>🤖 Chatbot Tư Vấn Ngành Học</h3>
+           <button id="chatCloseBtn" class="chat-close-btn" title="Đóng chatbot">✕</button>
+         </div>
+
+         <!-- Chat Messages -->
+         <div id="chatMessages" class="chat-messages">
+           <div class="chat-bubble bot">
+             <p>Xin chào! 👋 Mình là chatbot tư vấn ngành học. Bạn muốn biết gì về các ngành học?</p>
+           </div>
+         </div>
+
+         <!-- Chat Input -->
+         <div class="chat-input-area">
+           <input 
+             id="chatInput" 
+             type="text" 
+             class="chat-input" 
+             placeholder="Nhập câu hỏi của bạn..."
+             autocomplete="off"
+           />
+           <button id="chatSendBtn" class="chat-send-btn">Gửi</button>
+         </div>
+
+         <!-- Back to Form Button -->
+         <div class="chat-footer">
+           <button id="chatBackToFormBtn" class="btn btn--ghost" style="width: 100%; padding: 10px;">
+             ← Quay về form
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+ </body>
+ </html>

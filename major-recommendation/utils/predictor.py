@@ -1,0 +1,416 @@
+import json
+import logging
+import math
+from typing import Any, Dict, List
+
+import joblib
+import pandas as pd
+from scipy.sparse import hstack
+from sklearn.metrics.pairwise import cosine_similarity
+
+from .constants import (
+    CATEGORICAL_COLS,
+    HYBRID_CONFIG_PATH,
+    HYBRID_WEIGHT_COSINE,
+    HYBRID_WEIGHT_RF,
+    MODEL_MAJORS_PATH,
+    MODEL_OHE_PATH,
+    MODEL_RF_PATH,
+    MODEL_TFIDF_PATH,
+)
+from .features import build_profile_text, row_dict_from_payload
+
+logger = logging.getLogger(__name__)
+
+CRITERIA_BLEND_WEIGHT = 0.40
+MODEL_BLEND_WEIGHT = 0.60
+
+CRITERIA_WEIGHTS = {
+    "so_thich_chinh": 0.18,
+    "mon_hoc_yeu_thich": 0.12,
+    "ky_nang_noi_bat": 0.15,
+    "tinh_cach": 0.10,
+    "moi_truong_lam_viec_mong_muon": 0.10,
+    "muc_tieu_nghe_nghiep": 0.10,
+    "mo_ta_ban_than": 0.15,
+    "dinh_huong_tuong_lai": 0.10,
+}
+
+DISPLAY_VALUE_MAP: Dict[str, Dict[str, str]] = {
+    "so_thich_chinh": {
+        "cong nghe": "Công nghệ",
+        "kinh doanh": "Kinh doanh",
+        "nghe thuat": "Nghệ thuật",
+        "y te": "Y tế",
+        "ngon ngu": "Ngôn ngữ",
+        "phap ly": "Pháp lý",
+        "giao duc": "Giáo dục",
+        "du lich": "Du lịch",
+    },
+    "mon_hoc_yeu_thich": {
+        "toan": "Toán",
+        "tin hoc": "Tin học",
+        "anh": "Anh",
+        "van": "Văn",
+        "ly": "Lý",
+        "hoa": "Hóa",
+        "sinh": "Sinh",
+    },
+    "ky_nang_noi_bat": {
+        "phan tich du lieu": "Phân tích dữ liệu",
+        "giao tiep": "Giao tiếp",
+        "thuyet trinh": "Thuyết trình",
+        "sang tao": "Sáng tạo",
+        "lanh dao": "Lãnh đạo",
+        "to chuc va lap ke hoach": "Tổ chức & lập kế hoạch",
+        "tu duy logic": "Tư duy logic",
+        "giai quyet van de": "Giải quyết vấn đề",
+        "can than": "Cẩn thận",
+        "lam viec nhom": "Làm việc nhóm",
+    },
+    "tinh_cach": {
+        "huong noi": "Hướng nội",
+        "huong ngoai": "Hướng ngoại",
+        "ti mi": "Tỉ mỉ",
+        "nang dong": "Năng động",
+        "kien nhan": "Kiên nhẫn",
+        "ky luat": "Kỷ luật",
+        "trach nhiem": "Trách nhiệm",
+        "ban linh": "Bản lĩnh",
+        "quyet doan": "Quyết đoán",
+    },
+}
+
+FIELD_TAG_MAP: Dict[str, Dict[str, List[str]]] = {
+    "so_thich_chinh": {
+        "cong nghe": ["cong", "nghe", "lap", "trinh", "ky", "thuat", "du", "lieu"],
+        "kinh doanh": ["kinh", "doanh", "quan", "tri", "ban", "hang", "marketing"],
+        "nghe thuat": ["thiet", "ke", "my", "thuat", "media", "sang", "tao"],
+        "y te": ["y", "te", "dieu", "duong", "benh", "vien", "cham", "soc"],
+        "ngon ngu": ["ngon", "ngu", "anh", "bien", "phien", "dich"],
+        "phap ly": ["luat", "phap", "ly", "lap", "luan"],
+        "giao duc": ["su", "pham", "giao", "duc", "day", "hoc"],
+        "du lich": ["du", "lich", "lu", "hanh", "khach", "san", "tour"],
+    },
+    "mon_hoc_yeu_thich": {
+        "toan": ["toan", "thong", "ke", "du", "lieu", "tai", "chinh"],
+        "tin hoc": ["cong", "nghe", "lap", "trinh", "he", "thong"],
+        "anh": ["anh", "ngon", "ngu", "quoc", "te", "truyen", "thong", "du", "lich"],
+        "van": ["bao", "chi", "truyen", "thong", "luat", "marketing"],
+        "ly": ["ky", "thuat", "co", "khi", "kien", "truc", "xay", "dung"],
+        "sinh": ["dieu", "duong", "y", "te", "suc", "khoe"],
+    },
+    "ky_nang_noi_bat": {
+        "phan tich du lieu": ["du", "lieu", "thong", "ke", "toan", "cong", "nghe", "he", "thong"],
+        "giao tiep": ["kinh", "doanh", "marketing", "du", "lich", "su", "pham", "ngon", "ngu"],
+        "thuyet trinh": ["truyen", "thong", "bao", "chi", "marketing", "su", "pham"],
+        "sang tao": ["thiet", "ke", "marketing", "kien", "truc", "media"],
+        "lanh dao": ["quan", "tri", "kinh", "doanh", "van", "hanh"],
+        "to chuc va lap ke hoach": ["quan", "tri", "ke", "toan", "van", "hanh"],
+        "tu duy logic": ["toan", "tin", "hoc", "lap", "trinh", "cong", "nghe"],
+        "giai quyet van de": ["ky", "thuat", "cong", "nghe", "co", "khi", "he", "thong"],
+        "can than": ["ke", "toan", "dieu", "duong", "co", "khi"],
+        "lam viec nhom": ["du", "lich", "marketing", "bao", "chi", "truyen", "thong", "su", "pham"],
+    },
+    "tinh_cach": {
+        "huong noi": ["du", "lieu", "cong", "nghe", "ke", "toan", "luat"],
+        "huong ngoai": ["du", "lich", "kinh", "doanh", "marketing", "su", "pham", "ngon", "ngu"],
+        "ti mi": ["ke", "toan", "dieu", "duong", "co", "khi"],
+        "kien nhan": ["dieu", "duong", "su", "pham", "luat"],
+        "ky luat": ["ke", "toan", "luat", "su", "pham", "cong", "nghe"],
+        "trach nhiem": ["dieu", "duong", "su", "pham", "luat", "y", "te"],
+        "nang dong": ["du", "lich", "marketing", "bao", "chi", "truyen", "thong"],
+        "ban linh": ["kinh", "doanh", "luat", "quan", "tri"],
+        "quyet doan": ["kinh", "doanh", "luat", "quan", "tri", "marketing"],
+    },
+    "moi_truong_lam_viec_mong_muon": {
+        "ky thuat": ["cong", "nghe", "du", "lieu", "co", "khi", "kien", "truc"],
+        "van phong": ["quan", "tri", "ke", "toan", "luat", "he", "thong"],
+        "linh hoat": ["du", "lich", "marketing", "bao", "chi", "truyen", "thong"],
+        "benh vien": ["dieu", "duong", "y", "te"],
+        "truong hoc": ["su", "pham", "giao", "duc"],
+    },
+    "muc_tieu_nghe_nghiep": {
+        "khoi nghiep": ["kinh", "doanh", "quan", "tri", "marketing"],
+        "on dinh": ["ke", "toan", "luat", "su", "pham", "dieu", "duong"],
+        "thu nhap cao": ["cong", "nghe", "du", "lieu", "tai", "chinh"],
+        "theo dam me": ["thiet", "ke", "kien", "truc", "bao", "chi", "truyen", "thong"],
+        "cong hien xa hoi": ["dieu", "duong", "su", "pham", "luat"],
+    },
+}
+
+
+def _norm_text(v: Any) -> str:
+    return str(v or "").strip().lower()
+
+
+def _vi_value(field: str, value: str) -> str:
+    v = _norm_text(value)
+    if not v:
+        return ""
+    mapped = DISPLAY_VALUE_MAP.get(field, {}).get(v)
+    if mapped:
+        return mapped
+    return value.strip() if str(value).strip() else ""
+
+
+def generate_feedback(
+    student_data: Dict[str, str],
+    major: Dict[str, str],
+    final_score: float,
+    model_score: float,
+    criteria_score: float,
+) -> str:
+    major_name = str(major.get("nganh", "Ngành này"))
+
+    if final_score >= 75:
+        ket_luan = f"Bạn có mức phù hợp cao với ngành {major_name}."
+    elif final_score >= 55:
+        ket_luan = f"Bạn khá phù hợp với ngành {major_name}."
+    else:
+        ket_luan = f"Ngành {major_name} hiện phù hợp ở mức tham khảo với bạn."
+
+    return ket_luan
+
+
+class Predictor:
+    def __init__(self) -> None:
+        self.model = joblib.load(MODEL_RF_PATH)
+        self.ohe = joblib.load(MODEL_OHE_PATH)
+        self.tfidf = joblib.load(MODEL_TFIDF_PATH)
+        with open(MODEL_MAJORS_PATH, "r", encoding="utf-8") as f:
+            self.majors: List[Dict[str, str]] = json.load(f)
+
+        self.major_names = [item["nganh"] for item in self.majors]
+        self.major_vectors = self.tfidf.transform([item["mo_ta"] for item in self.majors])
+        self.major_lookup = {item["nganh"]: item for item in self.majors}
+        self.major_tokens = {item["nganh"]: set(_norm_text(item.get("mo_ta", "")).split()) for item in self.majors}
+
+        self.weight_rf = HYBRID_WEIGHT_RF
+        self.weight_cosine = HYBRID_WEIGHT_COSINE
+        self.model_name = "CalibratedModel"
+        if HYBRID_CONFIG_PATH.exists():
+            cfg = json.loads(HYBRID_CONFIG_PATH.read_text(encoding="utf-8"))
+            self.weight_rf = float(cfg.get("weight_rf", HYBRID_WEIGHT_RF))
+            self.weight_cosine = float(cfg.get("weight_cosine", HYBRID_WEIGHT_COSINE))
+            self.model_name = str(cfg.get("model", self.model_name))
+
+    def _rule_hints(self, payload: Dict[str, str]) -> Dict[str, float]:
+        scores: Dict[str, float] = {}
+        mon = _norm_text(payload.get("mon_hoc_yeu_thich", ""))
+        skill = _norm_text(payload.get("ky_nang_noi_bat", ""))
+        interest = _norm_text(payload.get("so_thich_chinh", ""))
+
+        if mon in ["tin hoc", "toan"] and ("phan tich" in skill or "giai quyet" in skill):
+            scores["Cong nghe thong tin"] = scores.get("Cong nghe thong tin", 0) + 0.03
+            scores["Khoa hoc du lieu"] = scores.get("Khoa hoc du lieu", 0) + 0.04
+        if interest == "kinh doanh" and ("giao tiep" in skill or "lanh dao" in skill):
+            scores["Quan tri kinh doanh"] = scores.get("Quan tri kinh doanh", 0) + 0.05
+        if interest == "nghe thuat" or "sang tao" in skill:
+            scores["Thiet ke do hoa"] = scores.get("Thiet ke do hoa", 0) + 0.04
+
+        return scores
+
+    def _field_match_score(self, field: str, value: str, major: str) -> float:
+        value_n = _norm_text(value)
+        if not value_n:
+            return 0.0
+
+        major_tokens = self.major_tokens.get(major, set())
+        field_map = FIELD_TAG_MAP.get(field, {})
+        tags = field_map.get(value_n, value_n.split())
+        if not tags:
+            return 0.0
+
+        hit = sum(1 for t in tags if t in major_tokens)
+        return min(1.0, hit / max(1, len(tags)))
+
+    def _criteria_scores(self, row: Dict[str, str]) -> Dict[str, float]:
+        # Phan minh bach theo 8 truong input.
+        major_text_matrix = self.major_vectors
+
+        txt_self = _norm_text(row.get("mo_ta_ban_than", ""))
+        txt_future = _norm_text(row.get("dinh_huong_tuong_lai", ""))
+        txt_self_vec = self.tfidf.transform([txt_self]) if txt_self else None
+        txt_future_vec = self.tfidf.transform([txt_future]) if txt_future else None
+
+        scores: Dict[str, float] = {}
+        for idx, major in enumerate(self.major_names):
+            s = 0.0
+            s += CRITERIA_WEIGHTS["so_thich_chinh"] * self._field_match_score(
+                "so_thich_chinh", row.get("so_thich_chinh", ""), major
+            )
+            s += CRITERIA_WEIGHTS["mon_hoc_yeu_thich"] * self._field_match_score(
+                "mon_hoc_yeu_thich", row.get("mon_hoc_yeu_thich", ""), major
+            )
+            s += CRITERIA_WEIGHTS["ky_nang_noi_bat"] * self._field_match_score(
+                "ky_nang_noi_bat", row.get("ky_nang_noi_bat", ""), major
+            )
+            s += CRITERIA_WEIGHTS["tinh_cach"] * self._field_match_score(
+                "tinh_cach", row.get("tinh_cach", ""), major
+            )
+            s += CRITERIA_WEIGHTS["moi_truong_lam_viec_mong_muon"] * self._field_match_score(
+                "moi_truong_lam_viec_mong_muon", row.get("moi_truong_lam_viec_mong_muon", ""), major
+            )
+            s += CRITERIA_WEIGHTS["muc_tieu_nghe_nghiep"] * self._field_match_score(
+                "muc_tieu_nghe_nghiep", row.get("muc_tieu_nghe_nghiep", ""), major
+            )
+
+            if txt_self_vec is not None:
+                self_sim = float(cosine_similarity(txt_self_vec, major_text_matrix[idx])[0][0])
+            else:
+                self_sim = 0.0
+            if txt_future_vec is not None:
+                future_sim = float(cosine_similarity(txt_future_vec, major_text_matrix[idx])[0][0])
+            else:
+                future_sim = 0.0
+
+            s += CRITERIA_WEIGHTS["mo_ta_ban_than"] * max(0.0, self_sim)
+            s += CRITERIA_WEIGHTS["dinh_huong_tuong_lai"] * max(0.0, future_sim)
+
+            scores[major] = max(0.0, min(100.0, s * 100.0))
+
+        return scores
+
+    def predict(self, payload: Dict[str, str]) -> Dict[str, Any]:
+        row = row_dict_from_payload(payload)
+        student_df = pd.DataFrame([{col: row[col] for col in CATEGORICAL_COLS}])
+        student_cat = self.ohe.transform(student_df)
+
+        profile = build_profile_text(row)
+        student_text = self.tfidf.transform([profile])
+
+        features = hstack([student_cat, student_text])
+        ml_probs = self.model.predict_proba(features)[0]
+        ml_dict = dict(zip(self.model.classes_, ml_probs))
+
+        content_scores = cosine_similarity(student_text, self.major_vectors)[0]
+        content_dict = dict(zip(self.major_names, content_scores))
+
+        rule_boosts = self._rule_hints(payload)
+        criteria_scores = self._criteria_scores(row)
+
+        final_scores: Dict[str, float] = {}
+        model_raw_scores: Dict[str, float] = {}
+        for major in self.major_names:
+            base_score = (
+                self.weight_rf * ml_dict.get(major, 0.0)
+                + self.weight_cosine * content_dict.get(major, 0.0)
+            )
+            raw_boost = rule_boosts.get(major, 0.0)
+            max_boost = min(0.03, max(0.005, base_score * 0.08))
+            applied_boost = min(raw_boost, max_boost)
+            model_raw = base_score + applied_boost
+            model_raw_scores[major] = model_raw
+            rule_boosts[major] = applied_boost
+
+        raw_vals = list(model_raw_scores.values())
+        raw_min = min(raw_vals) if raw_vals else 0.0
+        raw_max = max(raw_vals) if raw_vals else 1.0
+        raw_span = max(1e-9, raw_max - raw_min)
+
+        # Nén độ chênh bằng temperature scaling tuyến tính
+        # temperature càng lớn thì điểm càng ít lệch
+        temperature = 1.8
+
+        model_scores: Dict[str, float] = {}
+        for major, raw in model_raw_scores.items():
+            norm_score = (raw - raw_min) / raw_span  # 0..1
+            compressed = 0.5 + (norm_score - 0.5) / temperature
+            model_scores[major] = max(0.0, min(100.0, compressed * 100.0))
+
+        for major in self.major_names:
+            final_scores[major] = (
+                MODEL_BLEND_WEIGHT * model_scores.get(major, 0.0)
+                + CRITERIA_BLEND_WEIGHT * criteria_scores.get(major, 0.0)
+            )
+
+        total_final = sum(final_scores.values())
+        if total_final > 0:
+            relative_scores = {k: (v / total_final) * 100.0 for k, v in final_scores.items()}
+        else:
+            u = 100.0 / max(1, len(final_scores))
+            relative_scores = {k: u for k in final_scores}
+
+        ranked = sorted(final_scores.items(), key=lambda x: x[1], reverse=True)[:3]
+        top3: List[Dict[str, float]] = []
+        for major, final_score in ranked:
+            ml_p = ml_dict.get(major, 0.0)
+            cos_p = content_dict.get(major, 0.0)
+            major_info = self.major_lookup.get(major, {"nganh": major, "mo_ta": ""})
+            feedback = generate_feedback(
+                row,
+                major_info,
+                round(final_score, 2),
+                round(model_scores.get(major, 0.0), 2),
+                round(criteria_scores.get(major, 0.0), 2),
+            )
+            top3.append(
+                {
+                    "nganh": major,
+                    "score": round(final_score, 2),
+                    "absolute_score": round(final_score, 2),
+                    "score_model": round(model_scores.get(major, 0.0), 2),
+                    "score_criteria": round(criteria_scores.get(major, 0.0), 2),
+                    "score_relative": round(relative_scores.get(major, 0.0), 2),
+                    "raw_score": round(final_score, 6),
+                    "phan_hoc_may": round(ml_p * 100, 2),
+                    "phan_noi_dung": round(cos_p * 100, 2),
+                    "rule_boost": round(rule_boosts.get(major, 0.0), 4),
+                    "feedback": feedback,
+                }
+            )
+
+        raw_top5_ranked = sorted(final_scores.items(), key=lambda x: x[1], reverse=True)[:5]
+        top5_raw: List[Dict[str, float]] = []
+        for major, score in raw_top5_ranked:
+            top5_raw.append(
+                {
+                    "nganh": major,
+                    "diem_tho": round(score, 6),
+                    "diem_model": round(model_scores.get(major, 0.0), 6),
+                    "diem_tieu_chi": round(criteria_scores.get(major, 0.0), 6),
+                    "phan_hoc_may": round(ml_dict.get(major, 0.0), 6),
+                    "phan_noi_dung": round(content_dict.get(major, 0.0), 6),
+                    "rule_boost": round(rule_boosts.get(major, 0.0), 6),
+                }
+            )
+
+        reasons = [
+            "Điểm cuối mỗi ngành = 70% điểm mô hình + 30% điểm tiêu chí minh bạch theo 8 trường nhập.",
+            "Điểm mô hình gồm: xác suất học máy + tương đồng nội dung + điều chỉnh rule nhẹ.",
+            "Điểm tiêu chí minh bạch gồm: sở thích, môn học, kỹ năng, tính cách, môi trường, mục tiêu, mô tả bản thân, định hướng tương lai.",
+        ]
+
+        overall_feedback = (
+            top3[0]["feedback"]
+            if top3
+            else "He thong chua du du lieu de tao nhan xet chi tiet cho ket qua nay."
+        )
+
+        return {
+            "top_3": top3,
+            "top_5_diem_tho": top5_raw,
+            "giai_thich": reasons,
+            "feedback": overall_feedback,
+            "cong_thuc": {
+                "hoc_may": f"{int(self.weight_rf * 100)}% {self.model_name} + {int(self.weight_cosine * 100)}% cosine (+rule nhe)",
+                "noi_dung": "Diem minh bach: 8 truong ho so co trong so co dinh",
+                "hien_thi": "Diem cuoi = 70% model_score + 30% criteria_score; score_relative chi de so sanh trong cung mot luot.",
+            },
+        }
+
+
+def load_predictor() -> Predictor:
+    required_files = [
+        MODEL_RF_PATH,
+        MODEL_OHE_PATH,
+        MODEL_TFIDF_PATH,
+        MODEL_MAJORS_PATH,
+    ]
+    missing = [str(f.name) for f in required_files if not f.exists()]
+    if missing:
+        raise FileNotFoundError(
+            "Thieu model: " + ", ".join(missing) + ". Hay chay 'python train_model.py' truoc."
+        )
+    return Predictor()

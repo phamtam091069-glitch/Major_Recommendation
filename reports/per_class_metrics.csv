@@ -1,0 +1,72 @@
+﻿label,precision,recall,f1,support
+An ninh mang,0.967741935483871,1.0,0.9836065573770492,30
+Bao chi,0.9090909090909091,1.0,0.9523809523809523,30
+Cong nghe thong tin,1.0,0.8571428571428571,0.9230769230769231,35
+Cong nghe thuc pham,0.967741935483871,1.0,0.9836065573770492,30
+Cong tac xa hoi,1.0,1.0,1.0,30
+Dia ly hoc,1.0,1.0,1.0,30
+Dieu duong,1.0,1.0,1.0,30
+Dieu khien va quan ly tau bien,0.9032258064516129,0.8235294117647058,0.8615384615384616,34
+Dinh duong,1.0,1.0,1.0,30
+Du lich,1.0,1.0,1.0,30
+Duoc hoc,1.0,1.0,1.0,30
+He thong thong tin,1.0,1.0,1.0,30
+Ho sinh,1.0,1.0,1.0,30
+Huong dan du lich,0.967741935483871,1.0,0.9836065573770492,30
+Ke toan,1.0,1.0,1.0,30
+Khai thac may tau thuy va quan ly ky thuat,1.0,0.8787878787878788,0.9354838709677419,33
+Khoa hoc du lieu,1.0,1.0,1.0,30
+Khoa hoc moi truong,1.0,1.0,1.0,30
+Khoi nghiep va doi moi sang tao,0.967741935483871,1.0,0.9836065573770492,30
+Kiem toan,1.0,1.0,1.0,30
+Kien truc,1.0,1.0,1.0,30
+Kinh doanh quoc te,1.0,1.0,1.0,30
+Ky thuat co khi,0.9142857142857143,0.9696969696969697,0.9411764705882353,33
+Ky thuat dien dien tu,0.9333333333333333,0.8235294117647058,0.875,34
+Ky thuat hinh anh y hoc,1.0,1.0,1.0,30
+Ky thuat may tinh,0.96875,0.9117647058823529,0.9393939393939394,34
+Ky thuat o to,0.967741935483871,1.0,0.9836065573770492,30
+Ky thuat phan mem,1.0,0.8823529411764706,0.9375,34
+Ky thuat xay dung,1.0,1.0,1.0,30
+Ky thuat xet nghiem y hoc,0.967741935483871,1.0,0.9836065573770492,30
+Logistics va quan ly chuoi cung ung,0.967741935483871,1.0,0.9836065573770492,30
+Luat,1.0,1.0,1.0,30
+Luat kinh te,1.0,1.0,1.0,30
+Marketing,1.0,1.0,1.0,30
+My thuat,1.0,1.0,1.0,30
+Nghe thuat so,0.967741935483871,1.0,0.9836065573770492,30
+Ngon ngu Anh,1.0,1.0,1.0,30
+Ngon ngu Han,1.0,1.0,1.0,30
+Ngon ngu Nhat,1.0,1.0,1.0,30
+Ngon ngu Trung,1.0,1.0,1.0,30
+Nhiếp anh,1.0,1.0,1.0,30
+Quan he cong chung,1.0,1.0,1.0,30
+Quan ly benh vien,1.0,1.0,1.0,30
+Quan tri dich vu du lich va lu hanh,1.0,1.0,1.0,30
+Quan tri khach san,1.0,1.0,1.0,30
+Quan tri kinh doanh,1.0,1.0,1.0,30
+Quan tri nha hang va dich vu an uong,1.0,1.0,1.0,30
+Quan tri nhan luc,0.9375,1.0,0.967741935483871,30
+Quay phim - Dung phim,0.9375,1.0,0.967741935483871,30
+Rang ham mat,1.0,1.0,1.0,30
+Su pham Dia ly,1.0,1.0,1.0,30
+Su pham Hoa hoc,1.0,1.0,1.0,30
+Su pham Lich su,1.0,1.0,1.0,30
+Su pham Sinh hoc,0.967741935483871,1.0,0.9836065573770492,30
+Su pham Tin hoc,1.0,1.0,1.0,30
+Su pham Toan hoc,1.0,1.0,1.0,30
+Su pham Vat ly,0.967741935483871,1.0,0.9836065573770492,30
+Tai chinh ngan hang,1.0,1.0,1.0,30
+Tam ly hoc,1.0,1.0,1.0,30
+Thiet ke do hoa,1.0,1.0,1.0,30
+Thiet ke game,0.967741935483871,1.0,0.9836065573770492,30
+Thiet ke noi that,1.0,1.0,1.0,30
+Thiet ke thoi trang,0.967741935483871,1.0,0.9836065573770492,30
+Thuong mai dien tu,0.967741935483871,1.0,0.9836065573770492,30
+Tri tue nhan tao,1.0,1.0,1.0,30
+Truyen thong da phuong tien,0.967741935483871,1.0,0.9836065573770492,30
+Tu dong hoa,0.96875,0.9393939393939394,0.9538461538461539,33
+Vat ly tri lieu va phuc hoi chuc nang,1.0,1.0,1.0,30
+Y da khoa,1.0,1.0,1.0,30
+Y hoc co truyen,1.0,1.0,1.0,30
+Y te cong cong,1.0,1.0,1.0,30

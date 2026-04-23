@@ -1,0 +1,108 @@
+================================================================================
+📊 THỐNG KÊ DỮ LIỆU HỆ THỐNG TƯ VẤN NGÀNH HỌC
+================================================================================
+
+📌 TỔNG SỐ MẪU DỮ LIỆU: 10800
+
+--------------------------------------------------------------------------------
+📂 PHÂN BỐ THEO NHÓM LĨNH VỰC (Tổng 12 nhóm)
+--------------------------------------------------------------------------------
+ 1. 🏥 Y tế & Chăm sóc sức khỏe               | 1650 mẫu |  15.3% | ███████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 2. 💼 Kinh doanh & Tài chính                 | 1500 mẫu |  13.9% | ██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 3. 🖥️ Công nghệ & Điện tử                   | 1446 mẫu |  13.4% | ██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 4. 🎨 Nghệ thuật & Thiết kế                  | 1200 mẫu |  11.1% | █████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 5. ⚙️ Kỹ thuật & Xây dựng                   | 1104 mẫu |  10.2% | █████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 6. 🗣️ Ngôn ngữ & Truyền thông               | 1050 mẫu |   9.7% | ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 7. 📚 Sư phạm & Giáo dục                     | 1050 mẫu |   9.7% | ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 8. 🏨 Du lịch & Dịch vụ                      |  750 mẫu |   6.9% | ███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+ 9. ⚖️ Pháp lý                               |  300 mẫu |   2.8% | █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+10. 🧠 Khoa học xã hội                        |  300 mẫu |   2.8% | █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+11. 🌍 Môi trường & Khoa học                  |  150 mẫu |   1.4% | ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+12. ⚽ Thể thao                               |    0 mẫu |   0.0% | ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Tổng mẫu trong nhóm: 10500 / 10800
+
+--------------------------------------------------------------------------------
+📋 CHI TIẾT THEO NGÀNH (Tổng 71 ngành)
+--------------------------------------------------------------------------------
+  1. Cong nghe thong tin                           |  173 mẫu |   1.6%
+  2. Dieu khien va quan ly tau bien                |  172 mẫu |   1.6%
+  3. Ky thuat dien dien tu                         |  171 mẫu |   1.6%
+  4. Ky thuat may tinh                             |  168 mẫu |   1.6%
+  5. Ky thuat phan mem                             |  167 mẫu |   1.5%
+  6. Tu dong hoa                                   |  167 mẫu |   1.5%
+  7. Khai thac may tau thuy va quan ly ky thuat    |  167 mẫu |   1.5%
+  8. Ky thuat co khi                               |  165 mẫu |   1.5%
+  9. Huong dan du lich                             |  150 mẫu |   1.4%
+ 10. Kiem toan                                     |  150 mẫu |   1.4%
+ 11. Thiet ke do hoa                               |  150 mẫu |   1.4%
+ 12. Y te cong cong                                |  150 mẫu |   1.4%
+ 13. Ke toan                                       |  150 mẫu |   1.4%
+ 14. My thuat                                      |  150 mẫu |   1.4%
+ 15. Vat ly tri lieu va phuc hoi chuc nang         |  150 mẫu |   1.4%
+ 16. Thiet ke noi that                             |  150 mẫu |   1.4%
+ 17. Ky thuat xet nghiem y hoc                     |  150 mẫu |   1.4%
+ 18. Tai chinh ngan hang                           |  150 mẫu |   1.4%
+ 19. Su pham Lich su                               |  150 mẫu |   1.4%
+ 20. Su pham Toan hoc                              |  150 mẫu |   1.4%
+ 21. Duoc hoc                                      |  150 mẫu |   1.4%
+ 22. Dinh duong                                    |  150 mẫu |   1.4%
+ 23. Kinh doanh quoc te                            |  150 mẫu |   1.4%
+ 24. Su pham Tin hoc                               |  150 mẫu |   1.4%
+ 25. Luat                                          |  150 mẫu |   1.4%
+ 26. Su pham Hoa hoc                               |  150 mẫu |   1.4%
+ 27. Khoi nghiep va doi moi sang tao               |  150 mẫu |   1.4%
+ 28. Quan tri khach san                            |  150 mẫu |   1.4%
+ 29. Cong nghe thuc pham                           |  150 mẫu |   1.4%
+ 30. Su pham Vat ly                                |  150 mẫu |   1.4%
+ 31. Ngon ngu Trung                                |  150 mẫu |   1.4%
+ 32. Dieu duong                                    |  150 mẫu |   1.4%
+ 33. Khoa hoc du lieu                              |  150 mẫu |   1.4%
+ 34. Kien truc                                     |  150 mẫu |   1.4%
+ 35. Logistics va quan ly chuoi cung ung           |  150 mẫu |   1.4%
+ 36. Quan he cong chung                            |  150 mẫu |   1.4%
+ 37. Bao chi                                       |  150 mẫu |   1.4%
+ 38. Thiet ke game                                 |  150 mẫu |   1.4%
+ 39. Marketing                                     |  150 mẫu |   1.4%
+ 40. Y hoc co truyen                               |  150 mẫu |   1.4%
+ 41. He thong thong tin                            |  150 mẫu |   1.4%
+ 42. Nghe thuat so                                 |  150 mẫu |   1.4%
+ 43. Rang ham mat                                  |  150 mẫu |   1.4%
+ 44. Su pham Dia ly                                |  150 mẫu |   1.4%
+ 45. Quan ly benh vien                             |  150 mẫu |   1.4%
+ 46. Thiet ke thoi trang                           |  150 mẫu |   1.4%
+ 47. Ky thuat xay dung                             |  150 mẫu |   1.4%
+ 48. Tam ly hoc                                    |  150 mẫu |   1.4%
+ 49. Cong tac xa hoi                               |  150 mẫu |   1.4%
+ 50. Y da khoa                                     |  150 mẫu |   1.4%
+ 51. An ninh mang                                  |  150 mẫu |   1.4%
+ 52. Quay phim - Dung phim                         |  150 mẫu |   1.4%
+ 53. Ky thuat o to                                 |  150 mẫu |   1.4%
+ 54. Khoa hoc moi truong                           |  150 mẫu |   1.4%
+ 55. Ngon ngu Nhat                                 |  150 mẫu |   1.4%
+ 56. Luat kinh te                                  |  150 mẫu |   1.4%
+ 57. Nhiếp anh                                     |  150 mẫu |   1.4%
+ 58. Quan tri kinh doanh                           |  150 mẫu |   1.4%
+ 59. Su pham Sinh hoc                              |  150 mẫu |   1.4%
+ 60. Quan tri nhan luc                             |  150 mẫu |   1.4%
+ 61. Thuong mai dien tu                            |  150 mẫu |   1.4%
+ 62. Ngon ngu Han                                  |  150 mẫu |   1.4%
+ 63. Dia ly hoc                                    |  150 mẫu |   1.4%
+ 64. Ho sinh                                       |  150 mẫu |   1.4%
+ 65. Tri tue nhan tao                              |  150 mẫu |   1.4%
+ 66. Quan tri dich vu du lich va lu hanh           |  150 mẫu |   1.4%
+ 67. Truyen thong da phuong tien                   |  150 mẫu |   1.4%
+ 68. Quan tri nha hang va dich vu an uong          |  150 mẫu |   1.4%
+ 69. Ngon ngu Anh                                  |  150 mẫu |   1.4%
+ 70. Ky thuat hinh anh y hoc                       |  150 mẫu |   1.4%
+ 71. Du lich                                       |  150 mẫu |   1.4%
+
+--------------------------------------------------------------------------------
+📈 THỐNG KÊ CƠ BẢN
+--------------------------------------------------------------------------------
+Ngành có mẫu nhiều nhất: Cong nghe thong tin (173 mẫu)
+Ngành có mẫu ít nhất:   Du lich (150 mẫu)
+Trung bình mẫu/ngành:   152.1 mẫu
+Median mẫu/ngành:       150.0 mẫu
+
+================================================================================

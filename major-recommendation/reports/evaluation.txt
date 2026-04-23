@@ -1,0 +1,98 @@
+=== DANH GIA MO HINH CHINH (calibrated + hybrid) ===
+Model: CalibratedRandomForest
+Accuracy: 1.0000
+Top-3 Accuracy: 1.0000
+Macro-F1: 1.0000
+Weighted-F1: 1.0000
+CV Macro-F1 (3-fold): 1.0000 ± 0.0000
+TF-IDF max_features: 1200
+
+=== BAO CAO PHAN LOP ===
+                                       precision    recall  f1-score   support
+
+                         An ninh mang       1.00      1.00      1.00         4
+                              Bao chi       1.00      1.00      1.00         4
+                  Cong nghe thong tin       1.00      1.00      1.00         4
+                      Cong tac xa hoi       1.00      1.00      1.00         4
+                           Dieu duong       1.00      1.00      1.00         4
+                           Dinh duong       1.00      1.00      1.00         4
+                              Du lich       1.00      1.00      1.00         4
+                             Duoc hoc       1.00      1.00      1.00         4
+                   He thong thong tin       1.00      1.00      1.00         4
+                              Ho sinh       1.00      1.00      1.00         4
+                    Huong dan du lich       1.00      1.00      1.00         4
+                              Ke toan       1.00      1.00      1.00         4
+                     Khoa hoc du lieu       1.00      1.00      1.00         4
+      Khoi nghiep va doi moi sang tao       1.00      1.00      1.00         4
+                            Kiem toan       1.00      1.00      1.00         4
+                            Kien truc       1.00      1.00      1.00         4
+                   Kinh doanh quoc te       1.00      1.00      1.00         4
+                      Ky thuat co khi       1.00      1.00      1.00         4
+                Ky thuat dien dien tu       1.00      1.00      1.00         4
+              Ky thuat hinh anh y hoc       1.00      1.00      1.00         4
+                    Ky thuat may tinh       1.00      1.00      1.00         4
+                        Ky thuat o to       1.00      1.00      1.00         4
+                    Ky thuat phan mem       1.00      1.00      1.00         4
+                    Ky thuat xay dung       1.00      1.00      1.00         4
+            Ky thuat xet nghiem y hoc       1.00      1.00      1.00         4
+  Logistics va quan ly chuoi cung ung       1.00      1.00      1.00         4
+                                 Luat       1.00      1.00      1.00         4
+                         Luat kinh te       1.00      1.00      1.00         4
+                            Marketing       1.00      1.00      1.00         4
+                             My thuat       1.00      1.00      1.00         4
+                        Nghe thuat so       1.00      1.00      1.00         4
+                         Ngon ngu Anh       1.00      1.00      1.00         4
+                         Ngon ngu Han       1.00      1.00      1.00         4
+                        Ngon ngu Nhat       1.00      1.00      1.00         4
+                       Ngon ngu Trung       1.00      1.00      1.00         4
+                            Nhiếp anh       1.00      1.00      1.00         4
+                   Quan he cong chung       1.00      1.00      1.00         4
+                    Quan ly benh vien       1.00      1.00      1.00         4
+  Quan tri dich vu du lich va lu hanh       1.00      1.00      1.00         4
+                   Quan tri khach san       1.00      1.00      1.00         4
+                  Quan tri kinh doanh       1.00      1.00      1.00         4
+ Quan tri nha hang va dich vu an uong       1.00      1.00      1.00         4
+                    Quan tri nhan luc       1.00      1.00      1.00         4
+                Quay phim - Dung phim       1.00      1.00      1.00         4
+                         Rang ham mat       1.00      1.00      1.00         4
+                     Su pham Toan hoc       1.00      1.00      1.00         4
+                  Tai chinh ngan hang       1.00      1.00      1.00         4
+                           Tam ly hoc       1.00      1.00      1.00         4
+                      Thiet ke do hoa       1.00      1.00      1.00         4
+                        Thiet ke game       1.00      1.00      1.00         4
+                    Thiet ke noi that       1.00      1.00      1.00         4
+                  Thiet ke thoi trang       1.00      1.00      1.00         4
+                   Thuong mai dien tu       1.00      1.00      1.00         4
+                     Tri tue nhan tao       1.00      1.00      1.00         4
+          Truyen thong da phuong tien       1.00      1.00      1.00         4
+                          Tu dong hoa       1.00      1.00      1.00         4
+Vat ly tri lieu va phuc hoi chuc nang       1.00      1.00      1.00         4
+                            Y da khoa       1.00      1.00      1.00         4
+                      Y hoc co truyen       1.00      1.00      1.00         4
+                       Y te cong cong       1.00      1.00      1.00         4
+
+                             accuracy                           1.00       240
+                            macro avg       1.00      1.00      1.00       240
+                         weighted avg       1.00      1.00      1.00       240
+
+
+=== SO SANH THUAT TOAN (tap kiem tra 20%) ===
+- CalibratedRandomForest: acc=1.0000, macro_f1=1.0000, top3=1.0000
+- CalibratedLogisticRegression: acc=0.9125, macro_f1=0.9112, top3=0.9792
+Decision Tree: 0.4667
+Logistic Regression (plain): 0.9708
+=> Chon mo hinh chinh: CalibratedRandomForest
+
+=== HOLDOUT (template khac, khong train) ===
+Path: data\raw\students_holdout.csv
+Rows: 300
+Accuracy: 0.1100
+Top-3 Accuracy: 0.4350
+Macro-F1: 0.0601
+
+=== CONG THUC LAI KHI DU DOAN ===
+60% xac suat model + 40% cosine (TF-IDF ho so vs ho so nganh)
+
+=== FILE BAO CAO BO SUNG ===
+- reports/confusion_matrix.csv
+- reports/per_class_metrics.csv

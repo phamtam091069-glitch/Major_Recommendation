@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "currency": "VND/tháng",
+    "disclaimer": "Số liệu trên chỉ mang tính chất tham khảo tùy thuộc vào thị trường việc làm.",
+    "general_sources": [
+      "TopCV Salary Guide 2025",
+      "VietnamWorks Salary Report 2025",
+      "Navigos Group Talent Guide 2025"
+    ]
+  },
+  "majors": {
+    "Cong nghe thong tin": {
+      "updated_at": "2026-01",
+      "sources": [
+        "TopCV Salary Guide 2025",
+        "VietnamWorks Salary Report 2025"
+      ],
+      "salary_by_level": {
+        "junior": "12-20 triệu",
+        "middle": "20-38 triệu",
+        "senior": "38-70+ triệu"
+      },
+      "notes": [
+        "Mức lương Backend/Data/AI thường cao hơn mặt bằng entry-level.",
+        "Tiếng Anh và kinh nghiệm dự án thực tế ảnh hưởng mạnh tới mức lương."
+      ]
+    },
+    "Marketing": {
+      "updated_at": "2026-01",
+      "sources": [
+        "TopCV Salary Guide 2025",
+        "Navigos Group Talent Guide 2025"
+      ],
+      "salary_by_level": {
+        "junior": "9-15 triệu",
+        "middle": "15-28 triệu",
+        "senior": "28-50+ triệu"
+      },
+      "notes": [
+        "Performance Marketing và Brand Management có thể chênh lệch đáng kể theo ngành hàng.",
+        "Thu nhập thường biến động theo KPI, thưởng chiến dịch và quy mô doanh nghiệp."
+      ]
+    },
+    "Dieu khien va quan ly tau bien": {
+      "updated_at": "2026-01",
+      "sources": [
+        "Vietnam Maritime Salary Snapshot 2025",
+        "Tổng hợp tin tuyển dụng hàng hải 2025"
+      ],
+      "salary_by_level": {
+        "junior": "14-24 triệu",
+        "middle": "24-48 triệu",
+        "senior": "48-85+ triệu"
+      },
+      "notes": [
+        "Mức lương đi tàu quốc tế thường cao hơn tuyến nội địa.",
+        "Chứng chỉ chuyên môn, hải trình và ngoại ngữ là yếu tố quyết định thu nhập."
+      ]
+    },
+    "Khai thac may tau thuy va quan ly ky thuat": {
+      "updated_at": "2026-01",
+      "sources": [
+        "Vietnam Maritime Salary Snapshot 2025",
+        "Tổng hợp tin tuyển dụng hàng hải 2025"
+      ],
+      "salary_by_level": {
+        "junior": "15-26 triệu",
+        "middle": "26-52 triệu",
+        "senior": "52-90+ triệu"
+      },
+      "notes": [
+        "Vị trí máy trưởng và kỹ sư máy tàu có thể cao hơn đáng kể theo tuyến tàu.",
+        "Thu nhập phụ thuộc vào hạng tàu, số tháng đi biển và tiêu chuẩn vận hành quốc tế."
+      ]
+    }
+  }
+}

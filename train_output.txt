@@ -1,0 +1,2 @@
+[OK] Da train xong. Bao cao da luu tai: C:\Users\huyen\Downloads\major-recommendation\reports\evaluation.txt
+[OK] Da train va dong bo vao models/ (gom hybrid_config.json, majors.json)

@@ -1,0 +1,68 @@
+{
+  "feedbacks": [
+    {
+      "id": "f_0001",
+      "timestamp": "2026-04-14T17:00:00",
+      "major": "Cong nghe thong tin",
+      "major_display": "Công nghệ thông tin",
+      "rating": 5,
+      "comment": "Rất phù hợp với sở thích lập trình của tôi!"
+    },
+    {
+      "id": "f_0002",
+      "timestamp": "2026-04-14T17:05:00",
+      "major": "Khoa hoc du lieu",
+      "major_display": "Khoa học dữ liệu",
+      "rating": 4,
+      "comment": "Tuyệt vời, đúng với định hướng tương lai"
+    },
+    {
+      "id": "f_0003",
+      "timestamp": "2026-04-14T17:10:00",
+      "major": "Du lich va lu hanh",
+      "major_display": "Du lịch và lữ hành",
+      "rating": 5,
+      "comment": "Đó chính xác là những gì tôi muốn!"
+    },
+    {
+      "id": "f_0004",
+      "timestamp": "2026-04-14T22:09:03.276152",
+      "major": "He thong thong tin",
+      "major_display": "Hệ thống thông tin",
+      "rating": 2,
+      "comment": "."
+    },
+    {
+      "id": "f_0005",
+      "timestamp": "2026-04-14T22:09:09.816852",
+      "major": "Kiem toan",
+      "major_display": "Kiểm toán",
+      "rating": 4,
+      "comment": "ok"
+    },
+    {
+      "id": "f_0006",
+      "timestamp": "2026-04-14T22:27:41.709312",
+      "major": "Khoa hoc du lieu",
+      "major_display": "Khoa học dữ liệu",
+      "rating": 5,
+      "comment": ""
+    },
+    {
+      "id": "f_0007",
+      "timestamp": "2026-04-14T22:41:40.250981",
+      "major": "Quan tri dich vu du lich va lu hanh",
+      "major_display": "Quản trị dịch vụ du lịch và lữ hành",
+      "rating": 4,
+      "comment": ""
+    },
+    {
+      "id": "f_0008",
+      "timestamp": "2026-04-15T19:31:55.608371",
+      "major": "Du lich",
+      "major_display": "Du lịch",
+      "rating": 4,
+      "comment": "Hài lòng"
+    }
+  ]
+}

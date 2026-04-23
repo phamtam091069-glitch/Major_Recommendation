@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbot Tư Vấn Ngành Học</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='chatbot-page.css') }}" />
+</head>
+<body>
+  <div class="chatbot-container">
+    <!-- Header -->
+    <header class="chatbot-header">
+      <div class="chatbot-header-content">
+        <div class="chatbot-title">
+          <span class="chatbot-icon">🤖</span>
+          <h1>Chatbot Tư Vấn Ngành Học</h1>
+        </div>
+        <button class="chatbot-close-btn" onclick="window.close()" title="Đóng">✕</button>
+      </div>
+    </header>
+
+    <!-- Messages Container -->
+    <main class="chatbot-main">
+      <div id="chatContainer" class="chatbot-messages">
+        <div class="message bot-message">
+          <div class="message-avatar">🤖</div>
+          <div class="message-content">
+            <p>Xin chào! 👋 Để mình tư vấn ngành học sát với bạn hơn, hãy gửi 2 ý này trước nhé:<br>• Mô tả bản thân (Sở thích, tính cách, kỹ năng)<br>• Định hướng tương lai</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Input Area -->
+    <footer class="chatbot-footer">
+      <div class="chatbot-input-area">
+        <input 
+          id="messageInput" 
+          type="text" 
+          class="chatbot-input" 
+          placeholder="Nhập câu hỏi của bạn..."
+          autocomplete="off"
+        />
+        <button id="sendBtn" class="chatbot-send-btn" title="Gửi (Enter)">
+          ➤
+        </button>
+      </div>
+      <div class="chatbot-hint">Nhập Enter hoặc click nút Gửi để gửi tin nhắn</div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='chatbot-page.js') }}"></script>
+</body>
+</html>

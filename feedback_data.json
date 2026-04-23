@@ -1,0 +1,214 @@
+{
+  "score_levels": {
+    "high": {
+      "min": 70,
+      "max": 100,
+      "label": "high",
+      "message": "This major is a strong match for your profile."
+    },
+    "medium": {
+      "min": 45,
+      "max": 69.99,
+      "label": "medium",
+      "message": "This major is a moderate match and worth exploring further."
+    },
+    "low": {
+      "min": 0,
+      "max": 44.99,
+      "label": "low",
+      "message": "This major is currently a weaker match compared to other options."
+    }
+  },
+  "majors": {
+    "Cong nghe thong tin": {
+      "description": "Focuses on software development, systems, networks, and problem solving.",
+      "suggestions": [
+        "Build programming projects in Python/JavaScript.",
+        "Practice algorithms and logical thinking.",
+        "Join coding clubs or hackathons."
+      ]
+    },
+    "Khoa hoc du lieu": {
+      "description": "Combines statistics, machine learning, and data analysis for decision making.",
+      "suggestions": [
+        "Learn statistics and probability basics.",
+        "Practice Python, SQL, and data visualization.",
+        "Work on small data analysis portfolios."
+      ]
+    },
+    "Quan tri kinh doanh": {
+      "description": "Covers management, operations, leadership, and business strategy.",
+      "suggestions": [
+        "Develop communication and leadership skills.",
+        "Take part in business case competitions.",
+        "Study fundamentals of finance and marketing."
+      ]
+    },
+    "Marketing": {
+      "description": "Centers on branding, market research, creative campaigns, and customer engagement.",
+      "suggestions": [
+        "Practice content creation and storytelling.",
+        "Learn digital marketing tools and analytics.",
+        "Build sample campaigns for real products."
+      ]
+    },
+    "Thiet ke do hoa": {
+      "description": "Focuses on visual communication, design principles, and creative software tools.",
+      "suggestions": [
+        "Build a design portfolio.",
+        "Practice UI/UX and visual hierarchy.",
+        "Master tools like Figma or Adobe suite."
+      ]
+    },
+    "Dieu duong": {
+      "description": "Prepares students for patient care, clinical support, and healthcare teamwork.",
+      "suggestions": [
+        "Strengthen biology and health science knowledge.",
+        "Practice empathy and patient communication.",
+        "Gain exposure through healthcare volunteering."
+      ]
+    },
+    "Ngon ngu Anh": {
+      "description": "Builds advanced English communication, translation, and intercultural competence.",
+      "suggestions": [
+        "Practice speaking and writing daily.",
+        "Prepare for IELTS/TOEFL certifications.",
+        "Join English speaking communities."
+      ]
+    },
+    "Luat": {
+      "description": "Develops legal reasoning, argumentation, and understanding of regulations.",
+      "suggestions": [
+        "Improve critical reading and argument skills.",
+        "Follow legal case studies and debates.",
+        "Practice structured writing and evidence use."
+      ]
+    },
+    "Su pham": {
+      "description": "Trains future educators in teaching methods, communication, and learner support.",
+      "suggestions": [
+        "Practice public speaking and lesson planning.",
+        "Develop patience and mentoring habits.",
+        "Participate in tutoring activities."
+      ]
+    },
+    "He thong thong tin quan ly": {
+      "description": "Bridges business operations with information systems and process optimization.",
+      "suggestions": [
+        "Learn both business fundamentals and IT basics.",
+        "Practice process mapping and analysis.",
+        "Explore ERP and management tools."
+      ]
+    },
+    "Ke toan tai chinh": {
+      "description": "Focuses on accounting, auditing, financial reporting, and business analysis.",
+      "suggestions": [
+        "Strengthen numerical accuracy and attention to detail.",
+        "Learn spreadsheet and accounting software.",
+        "Study basic taxation and reporting standards."
+      ]
+    },
+    "Du lich va lu hanh": {
+      "description": "Prepares for tourism operations, travel planning, and customer service.",
+      "suggestions": [
+        "Improve communication and service mindset.",
+        "Develop foreign language skills.",
+        "Gain practical experience in events or tours."
+      ]
+    },
+    "Bao chi va truyen thong": {
+      "description": "Covers journalism, media production, interviewing, and storytelling.",
+      "suggestions": [
+        "Practice writing and interviewing skills.",
+        "Build a media content portfolio.",
+        "Learn multimedia editing tools."
+      ]
+    },
+    "Kien truc": {
+      "description": "Combines design creativity with technical planning for buildings and spaces.",
+      "suggestions": [
+        "Practice sketching and 3D thinking.",
+        "Build skills in CAD and modeling tools.",
+        "Study materials, structure, and sustainability basics."
+      ]
+    },
+    "Ky thuat co khi": {
+      "description": "Focuses on machinery, manufacturing, automation, and mechanical systems.",
+      "suggestions": [
+        "Strengthen physics and math foundations.",
+        "Practice CAD/CAM and mechanical design.",
+        "Join hands-on technical projects."
+      ]
+    }
+  },
+  "feature_rules": [
+    {
+      "id": "rule_01",
+      "if": {
+        "mon_hoc_yeu_thich_in": ["toan", "tin hoc"],
+        "ky_nang_noi_bat_contains_any": ["phan tich", "giai quyet", "logic"]
+      },
+      "boost": {
+        "Cong nghe thong tin": 0.03,
+        "Khoa hoc du lieu": 0.04
+      },
+      "reason": "Strong analytical profile aligns with tech/data majors."
+    },
+    {
+      "id": "rule_02",
+      "if": {
+        "so_thich_chinh_equals": "kinh doanh",
+        "ky_nang_noi_bat_contains_any": ["giao tiep", "lanh dao"]
+      },
+      "boost": {
+        "Quan tri kinh doanh": 0.05
+      },
+      "reason": "Business interest and communication/leadership support management major."
+    },
+    {
+      "id": "rule_03",
+      "if": {
+        "so_thich_chinh_equals": "nghe thuat",
+        "ky_nang_noi_bat_contains_any": ["sang tao"]
+      },
+      "boost": {
+        "Thiet ke do hoa": 0.04,
+        "Kien truc": 0.03
+      },
+      "reason": "Creative profile is highly relevant to design-oriented majors."
+    },
+    {
+      "id": "rule_04",
+      "if": {
+        "so_thich_chinh_equals": "y te",
+        "mon_hoc_yeu_thich_equals": "sinh"
+      },
+      "boost": {
+        "Dieu duong": 0.06
+      },
+      "reason": "Healthcare interest with biology preference matches nursing pathway."
+    },
+    {
+      "id": "rule_05",
+      "if": {
+        "so_thich_chinh_equals": "ngon ngu",
+        "mon_hoc_yeu_thich_equals": "anh"
+      },
+      "boost": {
+        "Ngon ngu Anh": 0.06
+      },
+      "reason": "Language orientation aligns with English major requirements."
+    },
+    {
+      "id": "rule_06",
+      "if": {
+        "muc_tieu_nghe_nghiep_equals": "khoi nghiep"
+      },
+      "boost": {
+        "Quan tri kinh doanh": 0.03,
+        "Marketing": 0.02
+      },
+      "reason": "Entrepreneurship goals align with business and marketing skills."
+    }
+  ]
+}

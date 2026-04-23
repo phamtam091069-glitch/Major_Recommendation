@@ -1,0 +1,669 @@
+# PHẦN 3.2 - TIỀN XỬ LÝ SỐ LIỆU (DATA PREPROCESSING)
+
+## 3.2.1 LÀM SẠCH DỮ LIỆU (Missing Values, Outliers, Duplicates)
+
+### 3.2.1.1 Giới thiệu vấn đề
+
+Dữ liệu thô thường chứa các vấn đề ảnh hưởng đến chất lượng mô hình:
+- **Giá trị bị thiếu (Missing Values)**: Người dùng không điền đủ thông tin
+- **Outliers (Giá trị ngoại lệ)**: Dữ liệu bất thường không đại diện cho quy luật
+- **Duplicates (Dữ liệu trùng lặp)**: Hàng dữ liệu giống nhau hoặc gần giống nhau
+
+Trong project hệ thống gợi ý ngành, dữ liệu có thể thiếu thông tin từ các trường:
+- so_thich_chinh, mon_hoc_yeu_thich, ky_nang_noi_bat
+- tinh_cach, moi_truong_lam_viec_mong_muon, muc_tieu_nghe_nghiep
+- mo_ta_ban_than (mô tả tự do), dinh_huong_tuong_lai
+
+### 3.2.1.2 Xử lý giá trị bị thiếu (Missing Values)
+
+**Quy trình xử lý trong project:**
+
+1. **Phát hiện missing values:**
+```python
+# File: data/clean_data.py (dòng 77-99)
+missing_count = self.df[col].isnull().sum()
+missing_pct = (missing_count / len(self.df)) * 100
+```
+
+2. **Xóa cột nếu thiếu > 50%:**
+```python
+if stats["percentage"] > MISSING_THRESHOLD_HIGH * 100:  # 50%
+    df = df.drop(columns=[col])
+```
+
+3. **Xóa hàng nếu thiếu > 50% số cột:**
+```python
+rows_with_many_missing = df[df.isnull().sum(axis=1) > len(df.columns) * 0.5].index
+df = df.drop(rows_with_many_missing)
+```
+
+4. **Điền giá trị cho cột còn lại:**
+   - **Categorical**: Dùng MODE (giá trị xuất hiện nhiều nhất)
+   ```python
+   fill_value = df[col].mode()[0]
+   df[col].fillna(fill_value, inplace=True)
+   ```
+   - **Numeric**: Dùng MEAN (trung bình)
+   ```python
+   fill_value = df[col].mean()
+   df[col].fillna(fill_value, inplace=True)
+   ```
+
+### 3.2.1.3 Xử lý giá trị ngoại lệ (Outliers)
+
+**Phương pháp 1: IQR (Interquartile Range) - dùng trong project**
+
+```python
+# File: data/clean_data.py (dòng 147-172)
+Q1 = df[col].quantile(0.25)  # 25th percentile
+Q3 = df[col].quantile(0.75)  # 75th percentile
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR  # Giới hạn dưới
+upper_bound = Q3 + 1.5 * IQR  # Giới hạn trên
+outlier_mask = (df[col] < lower_bound) | (df[col] > upper_bound)
+```
+
+**Phương pháp 2: Z-score**
+
+```python
+# File: data/clean_data.py (dòng 174-200)
+z_scores = np.abs((df[col] - mean) / std)
+outlier_mask = z_scores > 3.0  # Outlier nếu z-score > 3
+```
+
+**Xử lý outliers - Winsorization (Cap):**
+
+```python
+# Thay thế outlier bằng giới hạn thay vì xóa
+df[col] = df[col].clip(lower=lower_bound, upper=upper_bound)
+```
+
+Cách này giữ tất cả các hàng, chỉ giới hạn giá trị cực đoan.
+
+**Phương pháp 3: Isolation Forest (Advanced)**
+
+```python
+# File: data/clean_data.py (dòng 15, import)
+from sklearn.ensemble import IsolationForest
+
+# Phát hiện outlier bằng Isolation Forest
+iso_forest = IsolationForest(
+    contamination=0.05,  # Giả sử 5% dữ liệu là outlier
+    random_state=42
+)
+
+outlier_predictions = iso_forest.fit_predict(df_numeric)
+# -1 = outlier, 1 = normal
+
+outlier_mask = outlier_predictions == -1
+outlier_indices = df[outlier_mask].index.tolist()
+```
+
+**So sánh 3 phương pháp:**
+
+| Phương pháp | Ưu điểm | Nhược điểm |
+|------------|---------|-----------|
+| **IQR** | Đơn giản, nhanh | Chỉ hoạt động tốt trên dữ liệu 1D |
+| **Z-score** | Xác định rõ ràng | Yêu cầu dữ liệu bình thường |
+| **Isolation Forest** | Phát hiện anomaly phức tạp | Tốn tài nguyên hơn |
+
+**Khi nào dùng phương pháp nào:**
+- **IQR**: Dữ liệu numeric đơn giản (kích thước dataset nhỏ)
+- **Z-score**: Dữ liệu gần bình thường
+- **Isolation Forest**: Dữ liệu đa chiều, anomaly phức tạp
+
+**Trong project:**
+```python
+# data/clean_data.py - Hỗ trợ cả 3 phương pháp
+def detect_outliers_iqr(self) -> Dict[str, List[int]]:  # ✓ Có
+def detect_outliers_zscore(self) -> Dict[str, List[int]]:  # ✓ Có
+def detect_outliers_isolation_forest(self) -> Dict[str, List[int]]:  # Có thể thêm
+```
+
+### 3.2.1.4 Xử lý dữ liệu trùng lặp (Duplicates)
+
+**Exact Duplicates - Hàng hoàn toàn giống nhau:**
+
+```python
+# File: data/clean_data.py (dòng 243-248)
+dup_count = df.duplicated().sum()  # Đếm hàng trùng
+df = df.drop_duplicates(keep="first")  # Giữ lần đầu tiên
+```
+
+**Near-Duplicates - Fuzzy Matching (Hàng gần giống):**
+
+```python
+# File: data/clean_data.py (dòng 250-291)
+# Dùng similarity score để so sánh
+from difflib import SequenceMatcher
+similarity = SequenceMatcher(None, str1, str2).ratio()
+if similarity >= 0.85:  # 85% giống → xem là duplicate
+    # Đánh dấu hoặc xóa
+```
+
+
+## 3.2.2 CHUẨN HÓA VĂN BẢN TIẾNG VIỆT (TEXT NORMALIZATION)
+
+### 3.2.2.1 Tại sao cần chuẩn hóa tiếng Việt?
+
+Tiếng Việt có nhiều đặc điểm riêng:
+- **Dấu thanh**: Dấu sắc, huyền, hỏi, ngã, nặng làm thay đổi ý nghĩa từ
+  - Ví dụ: "Kỹ thuật" vs "ky thuat" (không dấu)
+- **Khoảng trắng thừa**: " Kỹ Thuật " cần được trim
+- **Chữ hoa/thường**: "KỲ THUẬT" vs "kỹ thuật"
+- **Ký tự đặc biệt**: "&", "-" cần được xử lý
+
+**Mục đích chuẩn hóa:**
+- Để dữ liệu input từ người dùng khớp với dữ liệu huấn luyện
+- Tránh mô hình nhầm lẫn do các biến thể của cùng một từ
+
+### 3.2.2.2 Quy trình chuẩn hóa trong project
+
+**File: utils/features.py - Hàm row_dict_from_payload()**
+
+```python
+# Chuẩn hóa từng trường categorical
+def row_dict_from_payload(payload):
+    normalized = {}
+    for field, value in payload.items():
+        if field in CATEGORICAL_COLS:
+            # Bước 1: Chuyển thành chuỗi
+            v = str(value).strip()
+            
+            # Bước 2: Loại bỏ dấu (unidecode)
+            v_no_diacritic = unidecode(v)
+            
+            # Bước 3: Chuyển thành chữ thường
+            v_lower = v_no_diacritic.lower()
+            
+            # Bước 4: Xóa khoảng trắng thừa
+            v_final = v_lower.strip()
+            
+            normalized[field] = v_final
+    return normalized
+```
+
+**Các bước chuẩn hóa chi tiết:**
+
+1. **Loại bỏ dấu (Diacritical Removal):**
+   ```
+   Input:  "Kỹ Thuật"
+   Output: "Ky Thuat"
+   ```
+   Sử dụng thư viện `unidecode` hoặc `unicodedata`
+
+2. **Chuyển thành chữ thường (Lowercase):**
+   ```
+   Input:  "Ky Thuat"
+   Output: "ky thuat"
+   ```
+
+3. **Xóa khoảng trắng thừa (Strip & Normalize Spaces):**
+   ```
+   Input:  "  ky  thuat  "
+   Output: "ky thuat"
+   ```
+
+### 3.2.2.3 Ví dụ minh họa từ project
+
+**Dữ liệu huấn luyện (chuẩn hóa sẵn):**
+```
+so_thich_chinh: "cong nghe", "kinh doanh", "nghe thuat"
+mon_hoc_yeu_thich: "tin hoc", "toan", "van"
+```
+
+**Input từ người dùng (thô):**
+```
+so_thich_chinh: "Công Nghệ"
+mon_hoc_yeu_thich: "  TIN HỌC  "
+```
+
+**Sau khi chuẩn hóa:**
+```
+so_thich_chinh: "cong nghe"  ✓ Khớp với data huấn luyện
+mon_hoc_yeu_thich: "tin hoc"  ✓ Khớp với data huấn luyện
+```
+
+### 3.2.2.4 Chuẩn hóa toàn bộ DataFrame
+
+**File: train_model.py (dòng 89-93)**
+
+```python
+def _normalize_categorical_df(df: pd.DataFrame) -> pd.DataFrame:
+    normalized = df.copy()
+    for col in CATEGORICAL_COLS:
+        normalized[col] = normalized[col].apply(
+            lambda v: row_dict_from_payload({col: v}).get(col, "khong xac dinh")
+        )
+    return normalized
+```
+
+Hàm này áp dụng chuẩn hóa cho tất cả các hàng trong DataFrame.
+
+
+## 3.2.3 CHUẨN HÓA GIÁ TRỊ PHÂN LOẠI (CATEGORICAL NORMALIZATION)
+
+### 3.2.3.1 Xử lý giá trị phân loại
+
+Sau khi loại bỏ dấu và chuyển thành chữ thường, các giá trị categorical cần được đồng nhất:
+
+**Các trường categorical trong project:**
+- `so_thich_chinh`: 7 giá trị (Cong nghe, Kinh doanh, v.v.)
+- `mon_hoc_yeu_thich`: 8 giá trị (Tin hoc, Toan, Van, v.v.)
+- `ky_nang_noi_bat`: 7 giá trị (Phan tich, Giao tiep, v.v.)
+- `tinh_cach`: 7 giá trị (Huong noi, Huong ngoai, v.v.)
+- `moi_truong_lam_viec_mong_muon`: 5 giá trị (Van phong, Ky thuat, v.v.)
+- `muc_tieu_nghe_nghiep`: 5 giá trị (On dinh, Thu nhap cao, v.v.)
+
+### 3.2.3.2 Ánh xạ giá trị (Value Mapping)
+
+**File: utils/constants.py**
+
+Định nghĩa các giá trị hợp lệ cho mỗi cột:
+
+```python
+VALID_SO_THICH_CHINH = [
+    "cong nghe", "kinh doanh", "nghe thuat", "y te", 
+    "ngon ngu", "giao duc", "phap ly"
+]
+
+VALID_MON_HOC = [
+    "tin hoc", "toan", "van", "anh", "sinh", "hoa", "ly", "su"
+]
+
+VALID_KY_NANG = [
+    "phan tich", "giao tiep", "sang tao", "lanh dao", 
+    "can than", "kien nhan", "ky luat"
+]
+```
+
+### 3.2.3.3 Kiểm tra & Điều chỉnh giá trị
+
+```python
+# Nếu giá trị không nằm trong danh sách hợp lệ
+if value not in VALID_VALUES:
+    # Tìm giá trị gần nhất hoặc gán giá trị mặc định
+    value = "khong xac dinh"
+```
+
+### 3.2.3.4 Ánh xạ Giá Trị Tương Đương (Alias Mapping)
+
+**Vấn đề:** Người dùng có thể nhập giá trị gần giống nhưng viết tắt hoặc khác cách:
+- "CNTT" vs "Cong nghe thong tin"
+- "tin" vs "tin hoc"
+- "Su pham tin" vs "Su pham Tin hoc"
+
+**Giải pháp:** Dùng Alias Mapping để ánh xạ các biến thể về giá trị chuẩn
+
+**File: utils/predictor.py (dòng 54-134)**
+
+```python
+MAJOR_EXTRA_ALIAS_MAP = {
+    "Cong nghe thong tin": ["cntt", "it", "information technology", 
+                            "cong nghe"],
+    "Su pham Tin hoc": ["su pham tin", "sư phạm tin", "giao vien tin hoc",
+                        "giáo viên tin học", "su pham tin hoc"],
+    "Su pham Sinh hoc": ["su pham sinh", "sư phạm sinh", "giao vien sinh hoc"],
+    "Su pham Hoa hoc": ["su pham hoa", "sư phạm hóa", "giao vien hoa hoc"],
+    "Su pham Vat ly": ["su pham ly", "sư phạm lý", "giao vien vat ly"],
+    "Su pham Lich su": ["su pham su", "sư phạm sử", "giao vien lich su"],
+    "Su pham Dia ly": ["su pham dia", "sư phạm địa", "giao vien dia ly"],
+}
+
+MARINE_ALIAS_MAP = {
+    "Dieu khien va quan ly tau bien": ["điều khiển và quản lý tàu biển",
+                                        "quản lý tàu biển", "hàng hải",
+                                        "ship management", "maritime",
+                                        "ship control", "maritime studies"],
+    "Khai thac may tau thuy va quan ly ky thuat": ["máy tàu thủy",
+                                                    "marine engineering",
+                                                    "ship machinery"],
+}
+```
+
+**Quy trình chuẩn hóa với Alias:**
+
+```
+Input: "CNTT"
+    ↓
+Normalize: "cntt" (loại dấu, chữ thường)
+    ↓
+Alias lookup: Tìm "cntt" trong MAJOR_EXTRA_ALIAS_MAP
+    ↓
+Output: "Cong nghe thong tin" ✓
+```
+
+**Ví dụ thực tế:**
+
+```python
+def _find_canonical_value(user_input, alias_map):
+    normalized = _normalize_alias_value(user_input)
+    
+    # Kiểm tra từng ngành
+    for major, aliases in alias_map.items():
+        if normalized in aliases:
+            return major
+    
+    return "khong xac dinh"
+
+# Sử dụng
+user_input = "CNTT"
+result = _find_canonical_value(user_input, MAJOR_EXTRA_ALIAS_MAP)
+# Result: "Cong nghe thong tin"
+```
+
+**Lợi ích:**
+- ✅ Tăng độ chính xác nhận diện
+- ✅ Chứa đựng viết tắt phổ biến
+- ✅ Hỗ trợ đa ngôn ngữ (tiếng Anh, tiếng Việt)
+- ✅ Giảm tỷ lệ "khong xac dinh"
+
+
+## 3.2.4 MÃ HÓA DỰ LIỆU PHÂN LOẠI (ONE-HOT ENCODING)
+
+### 3.2.4.1 Tại sao cần One-Hot Encoding?
+
+Mô hình Machine Learning (Random Forest, Logistic Regression) chỉ hiểu dữ liệu số (numeric). Dữ liệu categorical cần được chuyển đổi:
+
+```
+Trước: so_thich_chinh = "cong nghe"
+Sau:   [1, 0, 0, 0, 0, 0, 0]  (vị trí 0 = "cong nghe")
+
+Trước: so_thich_chinh = "kinh doanh"
+Sau:   [0, 1, 0, 0, 0, 0, 0]  (vị trí 1 = "kinh doanh")
+```
+
+### 3.2.4.2 One-Hot Encoding trong project
+
+**File: train_model.py (dòng 50-55)**
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+from scipy.sparse import hstack
+
+def build_feature_matrix(df, encoder, tfidf):
+    # Chuẩn hóa categorical columns
+    x_cat = df[CATEGORICAL_COLS].fillna("khong xac dinh")
+    x_cat = x_cat.apply(lambda col: col.astype(str).str.strip().str.lower())
+    
+    # One-Hot Encoding
+    x_cat_encoded = encoder.transform(x_cat)  # Shape: (n_samples, n_features)
+    
+    # Kết hợp với TF-IDF (sẽ nói ở phần tiếp)
+    x_text = tfidf.transform(df["profile_text"])
+    return hstack([x_cat_encoded, x_text])
+```
+
+### 3.2.4.3 Kích thước feature matrix
+
+**Trước One-Hot Encoding:**
+- 6 cột categorical
+- Kích thước: (n_samples, 6)
+
+**Sau One-Hot Encoding:**
+- so_thich_chinh: 7 giá trị → 7 cột
+- mon_hoc_yeu_thich: 8 giá trị → 8 cột
+- ky_nang_noi_bat: 7 giá trị → 7 cột
+- tinh_cach: 7 giá trị → 7 cột
+- moi_truong_lam_viec: 5 giá trị → 5 cột
+- muc_tieu_nghe_nghiep: 5 giá trị → 5 cột
+- **Tổng**: 7+8+7+7+5+5 = **39 cột**
+
+**Kích thước: (n_samples, 39)**
+
+
+## 3.2.5 XỬ LÝ NLP CHO CÂU TỰ LUẬN (TF-IDF VECTORIZER)
+
+### 3.2.5.1 Giới thiệu TF-IDF
+
+TF-IDF (Term Frequency - Inverse Document Frequency) chuyển đổi văn bản thành vector số:
+- **TF**: Tần suất của từ trong văn bản
+- **IDF**: Độ hiếm của từ trong tất cả văn bản
+- **Mục đích**: Các từ quan trọng (hiếm nhưng xuất hiện trong văn bản) được trọng số cao
+
+**Ví dụ:**
+```
+Văn bản 1: "Em rất quan tâm đến lập trình phần mềm web API"
+Văn bản 2: "Em yêu thích lập trình ứng dụng di động"
+
+TF-IDF Vector:
+- "lập": tần suất cao, IDF trung bình → trọng số trung bình
+- "em": tần suất cao, IDF thấp (xuất hiện ở cả hai) → trọng số thấp
+- "API": tần suất thấp, IDF cao (hiếm) → trọng số cao ✓
+```
+
+### 3.2.5.2 TF-IDF trong project
+
+**File: utils/features.py**
+
+1. **Xây dựng profile_text:**
+```python
+def build_profile_text(row):
+    # Kết hợp các trường text thành một đoạn văn bản
+    parts = [
+        row.get("mo_ta_ban_than", ""),
+        row.get("dinh_huong_tuong_lai", "")
+    ]
+    return " ".join([p for p in parts if p])
+```
+
+2. **TF-IDF Vectorization - File: train_model.py (dòng 84-86)**
+```python
+tfidf_size = _pick_tfidf_size(n_rows)  # max(500, min(1200, n*3))
+tfidf = TfidfVectorizer(
+    max_features=tfidf_size,
+    ngram_range=(1, 2),  # Unigrams + Bigrams
+    min_df=2,  # Từ xuất hiện ít nhất 2 lần
+    max_df=0.8  # Từ xuất hiện tối đa 80% văn bản
+)
+x_text = tfidf.fit_transform(df["profile_text"])
+```
+
+**Kích thước output:**
+- Profile_text có ~150 từ trung bình
+- Sau TF-IDF: (n_samples, 500-1200 features)
+
+### 3.2.5.3 Kết hợp One-Hot + TF-IDF
+
+**File: train_model.py (dòng 50-55)**
+
+```python
+from scipy.sparse import hstack
+
+# One-Hot Encoding: (n_samples, 39)
+x_cat_encoded = encoder.transform(x_cat)
+
+# TF-IDF: (n_samples, 1000)
+x_text = tfidf.transform(df["profile_text"])
+
+# Kết hợp: (n_samples, 39 + 1000 = 1039)
+X = hstack([x_cat_encoded, x_text])
+```
+
+
+## 3.2.6 TẠO DỮ LIỆU NHÂN TẠO & CÂN BẰNG (SYNTHETIC DATA & BALANCING)
+
+### 3.2.6.1 Tại sao cần tạo dữ liệu nhân tạo?
+
+Dữ liệu thực tế thường:
+- Không đủ mẫu cho tất cả lớp
+- Mất cân bằng (một lớp nhiều mẫu, lớp khác ít mẫu)
+- Có outliers, noise làm model khó học
+
+**Giải pháp:**
+- Tạo dữ liệu synthetic (nhân tạo) cân bằng cho tất cả lớp
+- Thêm controlled noise để model học được robustness
+- Tạo hard negatives để model phân biệt tốt hơn
+
+### 3.2.6.2 Dữ liệu nhân tạo trong project
+
+**File: data/generate_balanced_students.py**
+
+**1. Tạo dữ liệu cân bằng:**
+```python
+ROWS_PER_MAJOR = 150  # Mỗi ngành 150 mẫu
+HOLDOUT_ROWS_PER_MAJOR = 50  # Test set: 50/ngành
+
+# Kết quả:
+# Train: 150 × 67 ngành = 10,050 mẫu
+# Holdout: 50 × 67 ngành = 3,350 mẫu (không noise, sạch)
+```
+
+**2. Thêm controlled noise:**
+```python
+NOISE_RATE = 0.45  # 45% mẫu bị thêm noise
+
+def inject_controlled_noise(row, rng):
+    if rng.random() >= NOISE_RATE:
+        return row  # 55% không thay đổi
+    
+    # 45%: Ngẫu nhiên thay đổi 1-2 trường
+    n_fields = 1 if rng.random() < 0.8 else 2
+    fields = rng.sample(list(FIELD_POOLS.keys()), k=n_fields)
+    for field in fields:
+        candidates = [x for x in FIELD_POOLS[field] if x != row[field]]
+        if candidates:
+            row[field] = rng.choice(candidates)
+    return row
+```
+
+**3. Tạo hard negatives:**
+```python
+HARD_NEGATIVE_RATE = 0.50  # 50% mẫu nhận hard negative
+
+CONFUSION_PAIRS = {
+    "Cong nghe thong tin": "He thong thong tin quan ly",
+    "Khoa hoc du lieu": "Cong nghe thong tin",
+}
+
+def inject_hard_negative(row, major, rng):
+    if rng.random() >= HARD_NEGATIVE_RATE:
+        return row
+    
+    confuse_major = CONFUSION_PAIRS.get(major)
+    if not confuse_major:
+        return row
+    
+    # Trộn thông tin từ ngành confusing vào nhưng giữ label gốc
+    confuse = PROFILE[confuse_major]
+    row["mon_hoc_yeu_thich"] = rng.choice(confuse["mons"])
+    row["ky_nang_noi_bat"] = rng.choice(confuse["skills"])
+    return row
+```
+
+### 3.2.6.3 Audit chất lượng dữ liệu
+
+**File: data/audit_dataset.py**
+
+Kiểm tra sau khi sinh dữ liệu:
+
+```python
+# Phân phối lớp
+class_distribution = y.value_counts()
+imbalance_ratio = class_distribution.max() / class_distribution.min()
+# Nếu > 1.5 → mất cân bằng
+
+# Missing values
+missing_pct = df.isnull().sum() / len(df) * 100
+```
+
+
+## 3.2.7 CHIA DỮ LIỆU TRAIN/TEST (TRAIN/TEST SPLIT & STRATIFIED K-FOLD)
+
+### 3.2.7.1 Tại sao cần chia train/test?
+
+- **Train set**: Dùng để huấn luyện mô hình
+- **Test set**: Dùng để đánh giá mô hình độc lập (không từng thấy trước)
+- **Holdout set**: Tập riêng biệt, hoàn toàn độc lập để kiểm tra generalization
+
+**Lưu ý:** PHẢI chia train/test TRƯỚC làm sạch dữ liệu để tránh data leakage!
+
+### 3.2.7.2 Stratified K-Fold trong project
+
+**File: train_model.py (dòng 58-82)**
+
+```python
+from sklearn.model_selection import StratifiedKFold, train_test_split
+
+def cross_validate_macro_f1(x, y, estimator, n_splits=3):
+    # Stratified: giữ tỷ lệ lớp trong mỗi fold
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
+    
+    scores = []
+    for train_idx, val_idx in skf.split(x, y):
+        x_tr = x[train_idx]
+        x_va = x[val_idx]
+        y_tr = y.iloc[train_idx]
+        y_va = y.iloc[val_idx]
+        
+        # Train model trên fold này
+        m = clone(estimator)
+        m.fit(x_tr, y_tr)
+        
+        # Đánh giá trên validation fold
+        pred = m.predict(x_va)
+        macro_f1 = f1_score(y_va, pred, average="macro", zero_division=0)
+        scores.append(macro_f1)
+    
+    # Trả về mean và std của macro_f1 qua các fold
+    return mean(scores), std(scores)
+```
+
+**Ưu điểm Stratified K-Fold:**
+- Giữ tỷ lệ lớp trong mỗi fold
+- Tránh overfitting trên một fold
+- Đánh giá model chính xác hơn
+
+### 3.2.7.3 Train-Test Split cuối cùng
+
+**File: train_model.py (dòng 238-240)**
+
+```python
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y,
+    test_size=0.2,  # 20% làm test
+    stratify=y,  # Giữ tỷ lệ lớp
+    random_state=42  # Tái hiện kết quả
+)
+```
+
+**Kích thước:**
+- Train: ~8,000 mẫu (80%)
+- Test: ~2,000 mẫu (20%)
+
+### 3.2.7.4 Quy trình đánh giá model
+
+```
+Dữ liệu gốc (10,050 mẫu)
+    |
+    v
+chia 80/20 (stratified)
+    |
+    +-- Train (8,000) -- K-Fold (3 folds)
+    |                     |
+    |                     +-- Fold 1: train, val
+    |                     +-- Fold 2: train, val
+    |                     +-- Fold 3: train, val
+    |
+    +-- Test (2,000) -- Đánh giá mô hình cuối cùng
+    
+Holdout set (3,350 mẫu) -- Kiểm tra generalization
+```
+
+### 3.2.7.5 Best practices
+
+1. **Giữ random_state cố định** để có thể tái hiện kết quả
+2. **Dùng stratified split** cho dữ liệu không cân bằng
+3. **Không chuẩn hóa scaler trên test set**
+4. **Fit scaler trên train**, áp dụng lên test
+5. **Kiểm tra holdout set độc lập** để đánh giá thực tế
+
+## KẾT LUẬN
+
+Tiền xử lý dữ liệu là bước **vô cùng quan trọng** (chiếm 70-80% thời gian ML):
+- Dữ liệu sạch, cân bằng → Model học tốt hơn
+- Tiền xử lý đúng cách → Tránh được nhiều lỗi
+- Audit dữ liệu → Biết được điểm yếu của data
+
+Trong project gợi ý ngành, các bước tiền xử lý đã được thực hiện tỉ mỉ để đảm bảo chất lượng model và tính fairness khi dự đoán ngành thích hợp cho học sinh.
+

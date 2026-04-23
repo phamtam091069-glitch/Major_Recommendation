@@ -1,0 +1,503 @@
+================================================================================
+                    PHẦN 3.4: TRÍCH XUẤT VÀ LỰA CHỌN ĐẶC TRƯNG
+                    (Feature Extraction & Selection)
+================================================================================
+
+Mục lục:
+  3.4.1. Mã hóa dữ liệu phân loại (One-hot Encoding)
+  3.4.2. Xử lý NLP cho câu tự luận (TF-IDF Vectorizer)
+  3.4.3. Lựa chọn đặc trưng cơ bản (Feature Selection)
+  3.4.4. Xử lý mất cân bằng dữ liệu (Class Imbalance)
+
+================================================================================
+3.4.1. MÃ HÓA DỮ LIỆU PHÂN LOẠI (ONE-HOT ENCODING)
+================================================================================
+
+1. Khái niệm One-Hot Encoding:
+
+One-Hot Encoding là một kỹ thuật chuyển đổi dữ liệu phân loại (categorical data) 
+thành định dạng số mà các thuật toán học máy có thể xử lý được. Mỗi giá trị 
+phân loại được biểu diễn dưới dạng một vector nhị phân, trong đó:
+  - Chỉ có một phần tử có giá trị 1 (biểu thị giá trị hiện tại)
+  - Tất cả các phần tử khác có giá trị 0
+
+Ví dụ: Với trường "sở_thích_chính" có 3 giá trị {Công nghệ, Kinh doanh, Y tế}:
+  - Công nghệ     → [1, 0, 0]
+  - Kinh doanh     → [0, 1, 0]
+  - Y tế           → [0, 0, 1]
+
+2. Tại sao cần One-Hot Encoding:
+
+Các thuật toán học máy như Random Forest, Logistic Regression, SVM chỉ hiểu được 
+dữ liệu số. Nếu trực tiếp sử dụng label text, model có thể hiểu nhầm quan hệ 
+so sánh không tồn tại. One-Hot Encoding giải quyết bằng cách biểu diễn mỗi giá trị 
+là một hình ảnh độc lập.
+
+3. Quá trình One-Hot Encoding trong dự án:
+
+a) Chuẩn hóa dữ liệu:
+   - Chuyển thường, xóa khoảng trắng, xử lý missing → "khong xac dinh"
+
+b) Áp dụng OneHotEncoder:
+   - Từ sklearn.preprocessing, tham số handle_unknown="ignore"
+   - Output: Ma trận thưa (sparse matrix)
+
+c) 6 trường categorical được encode:
+   1. sở_thích_chính (8 giá trị)
+   2. môn_học_yêu_thích (9 giá trị)
+   3. kỹ_năng_nổi_bật (10+ giá trị)
+   4. tính_cách (9 giá trị)
+   5. môi_trường_làm_việc_mong_muốn (5 giá trị)
+   6. mục_tiêu_nghề_nghiệp (7 giá trị)
+   Tổng: ~48 features
+
+4. Ưu điểm:
+   ✓ Không tạo mối quan hệ thứ tự giả tạo
+   ✓ Phù hợp với RF, LR, SVM
+   ✓ Dễ hiểu và interpret
+
+5. Nhược điểm và giải pháp:
+   ✗ Curse of dimensionality → Giải pháp: Feature Selection (phần 3.4.3)
+   ✗ Sparse matrix → Giải pháp: sparse_output=True tiết kiệm bộ nhớ
+
+6. Output:
+   - Ma trận (n_samples, 48) với giá trị 0 hoặc 1
+   - Sparse format CSR
+   - OneHotEncoder object được lưu để predict trên dữ liệu mới
+
+================================================================================
+3.4.2. XỬ LÝ NLP CHO CÂU TỰ LUẬN (TF-IDF VECTORIZER)
+================================================================================
+
+1. Khái niệm TF-IDF Vectorizer:
+
+TF-IDF (Term Frequency - Inverse Document Frequency) là một kỹ thuật xử lý ngôn ngữ 
+tự nhiên (NLP) để chuyển đổi văn bản thành vector số. Mỗi từ trong văn bản được 
+gán một trọng số dựa trên:
+  - TF (Term Frequency): Tần suất xuất hiện của từ trong văn bản hiện tại
+  - IDF (Inverse Document Frequency): Độ hiếm của từ trong toàn bộ tập dữ liệu
+
+Công thức: TF-IDF(t,d) = TF(t,d) × IDF(t)
+  - Từ thường gặp (nhiều văn bản): IDF thấp → TF-IDF thấp (ít quan trọng)
+  - Từ hiếm gặp (ít văn bản): IDF cao → TF-IDF cao (quan trọng)
+
+Ví dụ: Từ "học" xuất hiện 10 lần trong bản ghi nhưng 1000 bản ghi khác cũng có từ này
+→ TF-IDF thấp (không phân biệt được)
+Từ "machine learning" chỉ xuất hiện trong 5 bản ghi nhưng 100 lần trong bản ghi hiện tại
+→ TF-IDF cao (rất phân biệt được)
+
+2. Tại sao cần TF-IDF:
+
+Các mô hình học máy chỉ hiểu được số. Văn bản tự do (essay) không thể trực tiếp 
+chuyền vào model. TF-IDF giải quyết bằng cách:
+  - Chuyển mỗi văn bản thành vector số (đặc trưng tự động)
+  - Các đặc trưng này mang thông tin ngữ nghĩa
+  - Từ quan trọng nhận trọng số cao, từ không quan trọng nhận trọng số thấp
+
+3. Quá trình TF-IDF trong dự án:
+
+a) Chuẩn hóa văn bản:
+   - Ghép 2 trường text: mô_tả_bản_thân + định_hướng_tương_lai
+   - Chuyển thường (lowercase)
+   - Xóa dấu tiếng Việt (ả, á, ã → a)
+   - Xóa ký tự đặc biệt
+
+   Ví dụ input:
+     "Em thích Lập Trình & AI!" 
+   → Output sau chuẩn hóa:
+     "em thich lap trinh va ai"
+
+b) Áp dụng TfidfVectorizer:
+   - Từ sklearn.feature_extraction.text
+   - Tham số quan trọng:
+     
+     * max_features: 500-1200
+       Mục đích: Giới hạn số từ để tránh curse of dimensionality
+       Tự động điều chỉnh: max_features = max(500, min(1200, n_rows * 3))
+       Ví dụ: 1000 mẫu → 500*3 = 1500 → giới hạn 1200 features
+     
+     * ngram_range=(1, 2)
+       Mục đích: Bắt cả từ đơn (unigram) và cặp từ (bigram)
+       Unigram: "lập", "trình", "ai"
+       Bigram: "lập trình", "trình ai"
+       Giúp model hiểu được cụm từ có ý nghĩa (bigram)
+     
+     * min_df=2
+       Mục đích: Từ phải xuất hiện ít nhất 2 lần trong tập train
+       Loại bỏ những từ quá hiếm (nhiều khả năng là typo hoặc từ đặc thù)
+     
+     * sublinear_tf=True
+       Mục đích: Áp dụng log scaling cho TF
+       TF(t) = 1 + log(count) thay vì chỉ count
+       Giúp cân bằng giữa từ xuất hiện ít và nhiều
+
+c) 2 trường text được xử lý:
+   1. mô_tả_bản_thân: "Em thích lập trình, tìm lỗi hệ thống..."
+   2. định_hướng_tương_lai: "Em muốn trở thành kỹ sư phần mềm..."
+
+d) Output của TF-IDF:
+   - Ma trận hình dạng (n_samples, max_features) - ví dụ (1000, 1200)
+   - Mỗi phần tử là giá trị TF-IDF từ 0 đến 1
+   - Ma trận thưa (sparse format)
+
+4. Ưu điểm:
+
+✓ Tự động trích xuất đặc trưng từ văn bản
+✓ Trọng số từ dựa trên tần suất → từ quan trọng được ưu tiên
+✓ Không cần xác định từ khóa thủ công
+✓ Hoạt động tốt với các bài toán phân loại văn bản
+
+5. Nhược điểm và giải pháp:
+
+✗ Không hiểu ngữ cảnh (context): "tôi không thích" vs "tôi thích"
+  → Giải pháp: Sử dụng embedding (Word2Vec, BERT) nâng cao hơn
+
+✗ Không xử lý stopwords: Từ chứng như "và", "là", "của"
+  → Giải pháp: Cần loại bỏ stopwords tiếng Việt (hiện chưa có)
+
+✗ Số features lớn (1200): Có thể gây overfitting
+  → Giải pháp: Feature Selection (phần 3.4.3)
+
+6. Phân tích Vocabulary:
+
+Sau khi fit TF-IDF trên training set:
+  - Số từ độc lập (vocabulary size): ~1200 (hoặc ít hơn nếu dữ liệu nhỏ)
+  - Từ phổ biến nhất: "học", "muốn", "thích", "ngành"...
+  - Các bigram quan trọng: "lập trình", "kỹ sư", "phần mềm"...
+
+7. Output:
+   - Ma trận TF-IDF (n_samples, max_features)
+   - TfidfVectorizer object được lưu để transform dữ liệu mới
+   - Vocabulary mapping (từ → index)
+
+================================================================================
+3.4.3. LỰA CHỌN ĐẶC TRƯNG CƠ BẢN (FEATURE SELECTION)
+================================================================================
+
+1. Khái niệm Feature Selection:
+
+Feature Selection (lựa chọn đặc trưng) là quá trình chọn ra tập hợp con các đặc trưng 
+(features) quan trọng nhất từ toàn bộ đặc trưng có sẵn. Mục đích:
+  - Tăng hiệu suất model (accuracy, precision, recall)
+  - Giảm thời gian huấn luyện
+  - Giảm bộ nhớ sử dụng
+  - Cải thiện khả năng tổng quát hóa (generalization)
+  - Loại bỏ đặc trưng nhiễu (noise)
+
+Ví dụ: Nếu có 48 + 1200 = 1248 features, nhưng chỉ 100 features thực sự quan trọng
+→ Sử dụng 100 features thay vì 1248 → Model tốt hơn, nhanh hơn
+
+2. Tại sao cần Feature Selection:
+
+a) Curse of Dimensionality (Lời nguyền thứ nguyên):
+   - Càng nhiều features, model càng dễ overfitting
+   - Dữ liệu trở nên thưa (sparse) trong không gian đa chiều
+   - Khoảng cách giữa các điểm trong không gian tăng
+   - Cần nhiều dữ liệu hơn để học hết tất cả features
+
+b) Nhiễu (Noise):
+   - Không phải tất cả features đều có liên quan đến target
+   - Một số features là ngẫu nhiên hoặc không liên quan
+   - Những features này làm giảm hiệu suất model
+
+c) Thời gian tính toán:
+   - Ít features → Thời gian training giảm
+   - Ít features → Thời gian predict giảm
+
+3. Các phương pháp lựa chọn đặc trưng:
+
+a) Variance Threshold (Loại bỏ features với phương sai thấp):
+   
+   Khái niệm:
+   - Features có phương sai thấp = gần như không thay đổi
+   - Ví dụ: 99% bản ghi có giá trị 0, chỉ 1% có giá trị 1
+   - Features này không có giá trị dự đoán
+   
+   Phương pháp:
+   - Tính phương sai của mỗi feature
+   - Loại bỏ features có phương sai < ngưỡng (thường 0.01)
+   
+   Ưu điểm: Nhanh, đơn giản
+   Nhược điểm: Chỉ dựa trên thống kê, không xét liên hệ với target
+
+b) Correlation Analysis (Phân tích tương quan):
+   
+   Khái niệm:
+   - Tính correlation giữa các features
+   - Loại bỏ cặp features có tương quan cao (>0.95)
+   - Giảm redundancy (dự phòng)
+   
+   Ví dụ:
+   - Feature A: [1, 2, 3, 4, 5]
+   - Feature B: [2, 4, 6, 8, 10]
+   - Correlation = 1.0 (hoàn toàn tương quan)
+   - Chỉ giữ lại một feature, loại bỏ cái kia
+   
+   Ưu điểm: Giảm redundancy
+   Nhược điểm: Không xét liên hệ với target
+
+c) Chi-Square Test (Kiểm định Chi bình phương):
+   
+   Khái niệm:
+   - Kiểm tra sự phụ thuộc giữa feature và target
+   - Chỉ áp dụng cho categorical features (One-Hot Encoding)
+   - H0: Feature và target độc lập (không liên quan)
+   - H1: Feature và target phụ thuộc (có liên quan)
+   
+   Quy trình:
+   1. Tính ma trận contingency (bảng chéo)
+   2. Tính giá trị Chi-square
+   3. Tính p-value
+   4. Nếu p-value < 0.05 → Feature quan trọng
+   
+   Ưu điểm: Xét liên hệ với target
+   Nhược điểm: Chỉ áp dụng cho categorical features
+
+d) Feature Importance từ Tree-based Models:
+   
+   Khái niệm:
+   - Train một model (RandomForest) trên toàn bộ features
+   - Lấy feature_importances_ từ model
+   - Features có importance cao → quan trọng
+   
+   Cách tính:
+   - Dựa trên số lần feature được sử dụng để split tree
+   - Dựa trên mức độ giảm impurity (Gini, Entropy)
+   
+   Quy trình:
+   1. Train RandomForest với toàn bộ features
+   2. Lấy feature_importances_
+   3. Sắp xếp features theo importance giảm dần
+   4. Giữ lại top N features
+   
+   Ưu điểm: Xét liên hệ phi tuyến với target
+   Nhược điểm: Mất nhiều thời gian (phải train model)
+
+4. Kỳ vọng về lựa chọn trong dự án:
+
+Sự kết hợp các phương pháp:
+  
+  1. Loại bỏ features với phương sai thấp (Variance Threshold)
+  2. Tính correlation, loại bỏ redundancy (Correlation Analysis)
+  3. Chi-square test cho 6 trường categorical
+  4. Feature importance từ RandomForest
+  5. Domain knowledge: Giữ 8 trường đã chọn sẵn
+
+5. Lý do chọn 8 trường categorical + TF-IDF:
+
+Phân tích trọng số (Domain Knowledge + Data-Driven):
+  1. Sở thích chính (23%) - Trực tiếp chỉ thị ngành
+  2. Định hướng tương lai (20%) - Mục tiêu dài hạn rõ ràng
+  3. Kỹ năng nổi bật (16%) - Điểm mạnh cụ thể
+  4. Tính cách (14%) - Phù hợp môi trường làm việc
+  5. Môi trường làm việc (12%) - Điều kiện làm việc mong muốn
+  6. Môn học yêu thích (8%) - Năng lực học tập
+  7. Mô tả bản thân (4%) - Chi tiết bổ sung từ TF-IDF
+  8. Mục tiêu nghề nghiệp (3%) - Động lực công việc
+
+Tổng: 23% + 20% + 16% + 14% + 12% + 8% + 4% + 3% = 100%
+
+6. Lợi ích của 8 trường được chọn:
+
+✓ Bao phủ tất cả khía cạnh: sở thích, kỹ năng, tính cách, môi trường, mục tiêu
+✓ Có trọng số rõ ràng → Dễ interpret
+✓ Phù hợp với bài toán tư vấn ngành
+✓ Dữ liệu đầy đủ từ người dùng
+✓ Không quá nhiều (tránh overfitting) nhưng đủ (tránh underfitting)
+
+7. Output của Feature Selection:
+
+- Danh sách 48 features từ One-Hot Encoding
+- Danh sách ~1200 features từ TF-IDF
+- Kết hợp: Ma trận (n_samples, 48 + 1200) = (n_samples, ~1248)
+- Báo cáo chi tiết: Tương quan, Chi-square, Importance
+- Giải thích tại sao 8 trường được chọn
+
+================================================================================
+3.4.4. XỬ LÝ MẤT CÂN BẰNG DỮ LIỆU (CLASS IMBALANCE)
+================================================================================
+
+1. Khái niệm Class Imbalance (Mất cân bằng lớp):
+
+Class Imbalance (Class Imbalance) xảy ra khi số lượng mẫu giữa các lớp (classes) 
+không đều nhau. Ví dụ:
+  - Lớp A: 10,000 mẫu
+  - Lớp B: 500 mẫu
+  - Lớp C: 50 mẫu
+  
+Tỷ lệ không cân bằng: 10,000 : 500 : 50 = 200 : 10 : 1
+
+Trong bài toán tư vấn ngành (major recommendation):
+  - Một số ngành (VD: Công nghệ thông tin) có nhiều sinh viên
+  - Một số ngành (VD: Ngôn ngữ Hàn, Thẩm mỹ) có ít sinh viên
+  - Tỷ lệ có thể là 100:1 hoặc hơn
+
+2. Tại sao Class Imbalance là vấn đề:
+
+a) Model bị thiên vị (Bias):
+   - Model học tập tốt cho lớp đa số
+   - Model học tập kém cho lớp thiểu số
+   - Điều này tương tự như "một mình một kiếp" - lớp đa số chiếm ưu thế
+
+b) Metrics bị lừa dối:
+   - Accuracy cao nhưng recall thấp cho lớp thiểu số
+   - Ví dụ: Model luôn dự đoán lớp A
+     Accuracy = 95% (đúng với 95% mẫu của lớp A)
+     Nhưng Recall cho lớp B, C gần như 0%
+
+c) Overfitting cho lớp đa số:
+   - Model tập trung vào lớp đa số
+   - Không học được đặc trưng của lớp thiểu số
+   - Khả năng tổng quát hóa kém
+
+3. Phân tích Class Imbalance trong dự án:
+
+Kiểm tra phân bố các lớp (ngành):
+  - Sử dụng value_counts() trên target (ngành)
+  - Tính tỷ lệ: min_count / max_count
+  - Vẽ biểu đồ phân bố
+
+Ví dụ kết quả:
+  Công nghệ thông tin: 1200 mẫu (30%)
+  Kinh doanh: 800 mẫu (20%)
+  Y tế: 600 mẫu (15%)
+  ...
+  Ngôn ngữ Hàn: 30 mẫu (0.7%)
+  Thẩm mỹ: 20 mẫu (0.5%)
+  
+  Imbalance ratio: 1200 / 20 = 60:1
+
+4. Các phương pháp xử lý Class Imbalance:
+
+a) Class Weight Adjustment (Điều chỉnh trọng số lớp):
+   
+   Khái niệm:
+   - Gán trọng số cao cho lớp thiểu số
+   - Lớp thiểu số nhận lỗi cao hơn khi dự đoán sai
+   - Loss function: Loss = Σ (weight[y] × loss[y])
+   
+   Cách thực hiện:
+   - Trong sklearn: class_weight="balanced"
+   - Tự động tính: weight[i] = n_samples / (n_classes × n_samples[i])
+   
+   Ví dụ:
+   - Ngành A: 1200 mẫu → weight = 4000 / (60 × 1200) = 0.056
+   - Ngành Z: 20 mẫu → weight = 4000 / (60 × 20) = 3.33
+   - Lớp thiểu số nhận trọng số cao hơn
+   
+   Ưu điểm: Đơn giản, không cần dữ liệu giả
+   Nhược điểm: Có thể làm model nhạy cảm với nhiễu
+
+b) SMOTE (Synthetic Minority Over-sampling Technique):
+   
+   Khái niệm:
+   - Sinh dữ liệu giả cho lớp thiểu số
+   - Sử dụng k-nearest neighbors để tạo mẫu giả
+   - Không chỉ copy mẫu cũ mà tạo mẫu mới trong không gian feature
+   
+   Quy trình:
+   1. Chọn một mẫu từ lớp thiểu số
+   2. Tìm k nearest neighbors của mẫu đó
+   3. Tạo mẫu giả dọc theo đoạn nối giữa mẫu gốc và một neighbor
+   4. Lặp lại cho đến khi cân bằng
+   
+   Ví dụ:
+   - Lớp A: 1200 mẫu
+   - Lớp Z: 20 mẫu
+   - Sử dụng SMOTE để tạo 1180 mẫu giả cho lớp Z
+   - Kết quả: Lớp A: 1200, Lớp Z: 1200 (cân bằng)
+   
+   Ưu điểm: Tạo đặc trưng mới, không quá copy
+   Nhược điểm: Có thể gây overfitting, mất nhiều thời gian
+
+c) Oversampling (Lấy mẫu lặp lại):
+   
+   Khái niệm:
+   - Lặp lại mẫu từ lớp thiểu số
+   - Đơn giản nhưng có thể gây overfitting
+   
+   Ví dụ:
+   - Lớp A: 1200 mẫu
+   - Lớp Z: 20 mẫu
+   - Lặp lại lớp Z 60 lần
+   - Kết quả: Lớp A: 1200, Lớp Z: 1200 (lặp lại từ 20 mẫu gốc)
+   
+   Ưu điểm: Rất đơn giản
+   Nhược điểm: Overfit, không tạo đặc trưng mới
+
+d) Undersampling (Chọn mẫu con):
+   
+   Khái niệm:
+   - Lấy mẫu con từ lớp đa số
+   - Giảm kích thước tập dữ liệu
+   
+   Ví dụ:
+   - Lớp A: 1200 mẫu
+   - Lớp Z: 20 mẫu
+   - Lấy 40 mẫu ngẫu nhiên từ lớp A
+   - Kết quả: Lớp A: 40, Lớp Z: 20 (tổng dữ liệu giảm)
+   
+   Ưu điểm: Giảm thời gian training
+   Nhược điểm: Mất dữ liệu, có thể thiếu thông tin
+
+e) Hybrid Methods (Kết hợp):
+   
+   Khái niệm:
+   - Kết hợp Oversampling + Undersampling
+   - Hoặc kết hợp SMOTE + Tomek links
+   
+   Ví dụ: SMOTETomek
+   1. Sử dụng SMOTE để oversample lớp thiểu số
+   2. Sử dụng Tomek links để xóa mẫu gần boundary
+   3. Cân bằng dữ liệu tốt hơn
+
+5. Lựa chọn phương pháp trong dự án:
+
+Đặc điểm dự án:
+  - Số ngành: 60 lớp (không phải 2-3 lớp)
+  - Một số ngành có rất ít mẫu
+  - Cần bảo toàn tất cả ngành (không loại bỏ)
+
+Khuyến nghị:
+  ✓ Sử dụng class_weight="balanced" là chính (đã có trong code)
+  ✓ Có thể thử SMOTE nếu imbalance quá lớn (>100:1)
+  ✓ Kiểm tra recall/precision trên mỗi lớp
+  ✓ Sử dụng stratified k-fold cross-validation
+
+6. Metrics phù hợp cho Class Imbalance:
+
+a) Confusion Matrix:
+   - Xem chi tiết đúng/sai cho mỗi lớp
+   - Không bị lừa dối bởi accuracy
+
+b) Precision, Recall, F1-score:
+   - Macro average: Trung bình cộng cho tất cả lớp
+   - Weighted average: Trọng số theo số mẫu mỗi lớp
+   
+   Công thức:
+   - Precision = TP / (TP + FP) - độ chính xác
+   - Recall = TP / (TP + FN) - độ phủ
+   - F1 = 2 × (Precision × Recall) / (Precision + Recall)
+
+c) ROC-AUC (cho bài toán binary):
+   - Đánh giá khả năng phân biệt
+   - Không bị ảnh hưởng bởi threshold
+
+7. Xử lý Class Imbalance trong training:
+
+Quy trình:
+  1. Phân tích class distribution trước training
+  2. Chọn phương pháp xử lý (class_weight + SMOTE nếu cần)
+  3. Áp dụng chỉ trên training set (KHÔNG validation/test)
+  4. Train model với weight hoặc dữ liệu cân bằng
+  5. Evaluate trên test set gốc (không cân bằng)
+  6. Kiểm tra metrics: accuracy, macro F1, per-class recall
+
+8. Output của Class Imbalance Handling:
+
+- Báo cáo phân bố ban đầu (imbalance ratio)
+- Báo cáo phân bố sau khi xử lý (nếu dùng SMOTE)
+- Metrics chi tiết cho mỗi lớp
+- Khuyến nghị về phương pháp tốt nhất
+
+================================================================================

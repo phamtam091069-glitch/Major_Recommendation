@@ -1,0 +1,8 @@
+{
+  "weight_rf": 0.6,
+  "weight_cosine": 0.4,
+  "model": "CalibratedLogisticRegression",
+  "profile_text": "categorical_plus_essay",
+  "majors_source": "majors.json",
+  "tfidf_max_features": 1200
+}

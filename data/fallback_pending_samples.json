@@ -1,0 +1,940 @@
+{
+  "samples": [
+    {
+      "timestamp": "2026-04-19T19:38:42.645650",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.99,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-19T21:07:33.406537",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.98,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-20T09:43:30.748393",
+      "original_payload": {
+        "so_thich_chinh": "Du lich",
+        "mon_hoc_yeu_thich": "ia",
+        "ky_nang_noi_bat": "Can than",
+        "tinh_cach": "Huong noi",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "On dinh",
+        "mo_ta_ban_than": "em muon i kham pha nhieu noi",
+        "dinh_huong_tuong_lai": "em muon lam nha tham hiem"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Du lịch",
+        "mon_hoc_yeu_thich": "Địa",
+        "ky_nang_noi_bat": "Cẩn thận",
+        "tinh_cach": "Hướng nội",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Ổn định",
+        "mo_ta_ban_than": "em muon i kham pha nhieu noi",
+        "dinh_huong_tuong_lai": "em muon lam nha tham hiem"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.85,
+        "changed_fields": {
+          "so_thich_chinh": "Du lịch",
+          "mon_hoc_yeu_thich": "Địa",
+          "ky_nang_noi_bat": "Cẩn thận",
+          "tinh_cach": "Hướng nội",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Ổn định"
+        },
+        "unmatched_fields": {
+          "mon_hoc_yeu_thich": "ia"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-20T13:19:33.892939",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-20T13:39:53.660833",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-20T18:30:07.002757",
+      "original_payload": {
+        "so_thich_chinh": "Nghe thuat",
+        "mon_hoc_yeu_thich": "ia",
+        "ky_nang_noi_bat": "Sang tao",
+        "tinh_cach": "Huong noi",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Theo dam me",
+        "mo_ta_ban_than": "em thich ve",
+        "dinh_huong_tuong_lai": "em muon lam hoa si"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Nghệ thuật",
+        "mon_hoc_yeu_thich": "Văn",
+        "ky_nang_noi_bat": "Sáng tạo",
+        "tinh_cach": "Hướng nội",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Theo đam mê",
+        "mo_ta_ban_than": "em thich ve",
+        "dinh_huong_tuong_lai": "em muon lam hoa si"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.85,
+        "changed_fields": {
+          "so_thich_chinh": "Nghệ thuật",
+          "mon_hoc_yeu_thich": "Văn",
+          "ky_nang_noi_bat": "Sáng tạo",
+          "tinh_cach": "Hướng nội",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Theo đam mê"
+        },
+        "unmatched_fields": {
+          "mon_hoc_yeu_thich": "ia"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-21T01:53:51.070929",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-21T01:54:59.407059",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-21T18:24:07.950842",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "openai",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-22T16:36:14.888746",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-22T22:43:19.745224",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T10:26:30.759284",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T10:28:18.255130",
+      "original_payload": {
+        "so_thich_chinh": "Phap ly",
+        "mon_hoc_yeu_thich": "ia",
+        "ky_nang_noi_bat": "Giai quyet van de",
+        "tinh_cach": "Ban linh",
+        "moi_truong_lam_viec_mong_muon": "Truong hoc",
+        "muc_tieu_nghe_nghiep": "Cong hien xa hoi",
+        "mo_ta_ban_than": "hoc tot tieng anh hoc khoi xa hoi thich i choi",
+        "dinh_huong_tuong_lai": "em muon tim cong viec cong hien cho xa hoi"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Pháp lý",
+        "mon_hoc_yeu_thich": "Tin học",
+        "ky_nang_noi_bat": "Giải quyết vấn đề",
+        "tinh_cach": "Bản lĩnh",
+        "moi_truong_lam_viec_mong_muon": "Trường học",
+        "muc_tieu_nghe_nghiep": "Cống hiến xã hội",
+        "mo_ta_ban_than": "hoc tot tieng anh hoc khoi xa hoi thich i choi",
+        "dinh_huong_tuong_lai": "em muon tim cong viec cong hien cho xa hoi"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 0.8,
+        "changed_fields": {
+          "so_thich_chinh": "Pháp lý",
+          "mon_hoc_yeu_thich": "Tin học",
+          "ky_nang_noi_bat": "Giải quyết vấn đề",
+          "tinh_cach": "Bản lĩnh",
+          "moi_truong_lam_viec_mong_muon": "Trường học",
+          "muc_tieu_nghe_nghiep": "Cống hiến xã hội"
+        },
+        "unmatched_fields": {
+          "mon_hoc_yeu_thich": "ia"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T10:38:00.358223",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T12:41:48.924987",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Ky luat",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em thich i tau vien duong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Kỷ luật",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em thich i tau vien duong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Kỷ luật",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T12:58:24.768449",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Kien nhan",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich bien thich hai san",
+        "dinh_huong_tuong_lai": "em muon tro thanh thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Kiên nhẫn",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich bien thich hai san",
+        "dinh_huong_tuong_lai": "em muon tro thanh thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Kiên nhẫn",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T13:30:48.706415",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Trach nhiem",
+        "moi_truong_lam_viec_mong_muon": "Ky thuat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich bien",
+        "dinh_huong_tuong_lai": "toi muon lam thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Trách nhiệm",
+        "moi_truong_lam_viec_mong_muon": "Kỹ thuật",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich bien",
+        "dinh_huong_tuong_lai": "toi muon lam thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Trách nhiệm",
+          "moi_truong_lam_viec_mong_muon": "Kỹ thuật",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T14:43:29.082865",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Ti mi",
+        "moi_truong_lam_viec_mong_muon": "Ky thuat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau muon lam thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Tỉ mỉ",
+        "moi_truong_lam_viec_mong_muon": "Kỹ thuật",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau muon lam thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Tỉ mỉ",
+          "moi_truong_lam_viec_mong_muon": "Kỹ thuật",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T14:57:19.933420",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Huong ngoai",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau va tro thanh thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Hướng ngoại",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau va tro thanh thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Hướng ngoại",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T14:58:44.962014",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Huong ngoai",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau va tro thanh thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Hướng ngoại",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon lai tau va tro thanh thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Hướng ngoại",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T15:05:40.439967",
+      "original_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toan",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "quyet oan",
+        "moi_truong_lam_viec_mong_muon": "Van phong",
+        "muc_tieu_nghe_nghiep": "Khoi nghiep",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Kinh doanh",
+        "mon_hoc_yeu_thich": "Toán",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Quyết đoán",
+        "moi_truong_lam_viec_mong_muon": "Văn phòng",
+        "muc_tieu_nghe_nghiep": "Khởi nghiệp",
+        "mo_ta_ban_than": "em thich xay dung ke hoach quan ly oi nhom va ban hang",
+        "dinh_huong_tuong_lai": "em muon hoc quan tri e mo doanh nghiep rieng"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 0.95,
+        "changed_fields": {
+          "so_thich_chinh": "Kinh doanh",
+          "mon_hoc_yeu_thich": "Toán",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Quyết đoán",
+          "moi_truong_lam_viec_mong_muon": "Văn phòng",
+          "muc_tieu_nghe_nghiep": "Khởi nghiệp"
+        },
+        "unmatched_fields": {
+          "tinh_cach": "quyet oan"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T16:11:07.098915",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Ky luat",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon i tau"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Kỷ luật",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon i tau"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Kỷ luật",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T16:44:58.027804",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Kien nhan",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich hai san",
+        "dinh_huong_tuong_lai": "em thich i tau"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Kiên nhẫn",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich hai san",
+        "dinh_huong_tuong_lai": "em thich i tau"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Kiên nhẫn",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-04-23T17:03:32.571605",
+      "original_payload": {
+        "so_thich_chinh": "Ky thuat",
+        "mon_hoc_yeu_thich": "hoa",
+        "ky_nang_noi_bat": "Lanh dao",
+        "tinh_cach": "Ky luat",
+        "moi_truong_lam_viec_mong_muon": "Linh hoat",
+        "muc_tieu_nghe_nghiep": "Thu nhap cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon i tau va lam thuyen truong"
+      },
+      "normalized_payload": {
+        "so_thich_chinh": "Công nghệ",
+        "mon_hoc_yeu_thich": "Hóa",
+        "ky_nang_noi_bat": "Lãnh đạo",
+        "tinh_cach": "Kỷ luật",
+        "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+        "muc_tieu_nghe_nghiep": "Thu nhập cao",
+        "mo_ta_ban_than": "em thich tien",
+        "dinh_huong_tuong_lai": "em muon i tau va lam thuyen truong"
+      },
+      "meta": {
+        "used": true,
+        "source": "deepseek",
+        "confidence": 1.0,
+        "changed_fields": {
+          "so_thich_chinh": "Công nghệ",
+          "mon_hoc_yeu_thich": "Hóa",
+          "ky_nang_noi_bat": "Lãnh đạo",
+          "tinh_cach": "Kỷ luật",
+          "moi_truong_lam_viec_mong_muon": "Linh hoạt",
+          "muc_tieu_nghe_nghiep": "Thu nhập cao"
+        },
+        "unmatched_fields": {
+          "so_thich_chinh": "Ky thuat"
+        }
+      }
+    }
+  ]
+}

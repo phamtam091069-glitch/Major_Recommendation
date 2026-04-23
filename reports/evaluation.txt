@@ -1,0 +1,109 @@
+=== DANH GIA MO HINH CHINH (calibrated + hybrid) ===
+Model: CalibratedLogisticRegression
+Accuracy: 0.9856
+Top-3 Accuracy: 0.9898
+Macro-F1: 0.9863
+Weighted-F1: 0.9853
+CV Macro-F1 (3-fold): 0.9862 ± 0.0025
+TF-IDF max_features: 1200
+
+=== BAO CAO PHAN LOP ===
+                                            precision    recall  f1-score   support
+
+                              An ninh mang       0.97      1.00      0.98        30
+                                   Bao chi       0.91      1.00      0.95        30
+                       Cong nghe thong tin       1.00      0.86      0.92        35
+                       Cong nghe thuc pham       0.97      1.00      0.98        30
+                           Cong tac xa hoi       1.00      1.00      1.00        30
+                                Dia ly hoc       1.00      1.00      1.00        30
+                                Dieu duong       1.00      1.00      1.00        30
+            Dieu khien va quan ly tau bien       0.90      0.82      0.86        34
+                                Dinh duong       1.00      1.00      1.00        30
+                                   Du lich       1.00      1.00      1.00        30
+                                  Duoc hoc       1.00      1.00      1.00        30
+                        He thong thong tin       1.00      1.00      1.00        30
+                                   Ho sinh       1.00      1.00      1.00        30
+                         Huong dan du lich       0.97      1.00      0.98        30
+                                   Ke toan       1.00      1.00      1.00        30
+Khai thac may tau thuy va quan ly ky thuat       1.00      0.88      0.94        33
+                          Khoa hoc du lieu       1.00      1.00      1.00        30
+                       Khoa hoc moi truong       1.00      1.00      1.00        30
+           Khoi nghiep va doi moi sang tao       0.97      1.00      0.98        30
+                                 Kiem toan       1.00      1.00      1.00        30
+                                 Kien truc       1.00      1.00      1.00        30
+                        Kinh doanh quoc te       1.00      1.00      1.00        30
+                           Ky thuat co khi       0.91      0.97      0.94        33
+                     Ky thuat dien dien tu       0.93      0.82      0.88        34
+                   Ky thuat hinh anh y hoc       1.00      1.00      1.00        30
+                         Ky thuat may tinh       0.97      0.91      0.94        34
+                             Ky thuat o to       0.97      1.00      0.98        30
+                         Ky thuat phan mem       1.00      0.88      0.94        34
+                         Ky thuat xay dung       1.00      1.00      1.00        30
+                 Ky thuat xet nghiem y hoc       0.97      1.00      0.98        30
+       Logistics va quan ly chuoi cung ung       0.97      1.00      0.98        30
+                                      Luat       1.00      1.00      1.00        30
+                              Luat kinh te       1.00      1.00      1.00        30
+                                 Marketing       1.00      1.00      1.00        30
+                                  My thuat       1.00      1.00      1.00        30
+                             Nghe thuat so       0.97      1.00      0.98        30
+                              Ngon ngu Anh       1.00      1.00      1.00        30
+                              Ngon ngu Han       1.00      1.00      1.00        30
+                             Ngon ngu Nhat       1.00      1.00      1.00        30
+                            Ngon ngu Trung       1.00      1.00      1.00        30
+                                 Nhiếp anh       1.00      1.00      1.00        30
+                        Quan he cong chung       1.00      1.00      1.00        30
+                         Quan ly benh vien       1.00      1.00      1.00        30
+       Quan tri dich vu du lich va lu hanh       1.00      1.00      1.00        30
+                        Quan tri khach san       1.00      1.00      1.00        30
+                       Quan tri kinh doanh       1.00      1.00      1.00        30
+      Quan tri nha hang va dich vu an uong       1.00      1.00      1.00        30
+                         Quan tri nhan luc       0.94      1.00      0.97        30
+                     Quay phim - Dung phim       0.94      1.00      0.97        30
+                              Rang ham mat       1.00      1.00      1.00        30
+                            Su pham Dia ly       1.00      1.00      1.00        30
+                           Su pham Hoa hoc       1.00      1.00      1.00        30
+                           Su pham Lich su       1.00      1.00      1.00        30
+                          Su pham Sinh hoc       0.97      1.00      0.98        30
+                           Su pham Tin hoc       1.00      1.00      1.00        30
+                          Su pham Toan hoc       1.00      1.00      1.00        30
+                            Su pham Vat ly       0.97      1.00      0.98        30
+                       Tai chinh ngan hang       1.00      1.00      1.00        30
+                                Tam ly hoc       1.00      1.00      1.00        30
+                           Thiet ke do hoa       1.00      1.00      1.00        30
+                             Thiet ke game       0.97      1.00      0.98        30
+                         Thiet ke noi that       1.00      1.00      1.00        30
+                       Thiet ke thoi trang       0.97      1.00      0.98        30
+                        Thuong mai dien tu       0.97      1.00      0.98        30
+                          Tri tue nhan tao       1.00      1.00      1.00        30
+               Truyen thong da phuong tien       0.97      1.00      0.98        30
+                               Tu dong hoa       0.97      0.94      0.95        33
+     Vat ly tri lieu va phuc hoi chuc nang       1.00      1.00      1.00        30
+                                 Y da khoa       1.00      1.00      1.00        30
+                           Y hoc co truyen       1.00      1.00      1.00        30
+                            Y te cong cong       1.00      1.00      1.00        30
+
+                                  accuracy                           0.99      2160
+                                 macro avg       0.99      0.99      0.99      2160
+                              weighted avg       0.99      0.99      0.99      2160
+
+
+=== SO SANH THUAT TOAN (tap kiem tra 20%) ===
+- CalibratedRandomForest: acc=0.8884, macro_f1=0.8841, top3=0.9167
+- CalibratedLogisticRegression: acc=0.9856, macro_f1=0.9863, top3=0.9898
+Decision Tree: 0.1819
+Logistic Regression (plain): 0.9861
+=> Chon mo hinh chinh: CalibratedLogisticRegression
+
+=== HOLDOUT (template khac, khong train) ===
+Path: data\raw\students_holdout.csv
+Rows: 3550
+Accuracy: 1.0000
+Top-3 Accuracy: 1.0000
+Macro-F1: 1.0000
+
+=== CONG THUC LAI KHI DU DOAN ===
+60% xac suat model + 40% cosine (TF-IDF ho so vs ho so nganh)
+
+=== FILE BAO CAO BO SUNG ===
+- reports/confusion_matrix.csv
+- reports/per_class_metrics.csv

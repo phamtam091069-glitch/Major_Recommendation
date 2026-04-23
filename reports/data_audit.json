@@ -1,0 +1,164 @@
+{
+  "dataset_path": "data\\raw\\students.csv",
+  "n_rows": 270,
+  "n_columns": 9,
+  "columns": [
+    "so_thich_chinh",
+    "mon_hoc_yeu_thich",
+    "ky_nang_noi_bat",
+    "tinh_cach",
+    "moi_truong_lam_viec_mong_muon",
+    "muc_tieu_nghe_nghiep",
+    "mo_ta_ban_than",
+    "dinh_huong_tuong_lai",
+    "nganh_phu_hop"
+  ],
+  "missing_and_empty": {
+    "so_thich_chinh": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "mon_hoc_yeu_thich": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "ky_nang_noi_bat": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "tinh_cach": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "moi_truong_lam_viec_mong_muon": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "muc_tieu_nghe_nghiep": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "mo_ta_ban_than": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "dinh_huong_tuong_lai": {
+      "missing_na": 0,
+      "empty_like": 0
+    },
+    "nganh_phu_hop": {
+      "missing_na": 0,
+      "empty_like": 0
+    }
+  },
+  "duplicate_rows": 0,
+  "class_distribution": {
+    "n_classes": 15,
+    "min_count": 18,
+    "max_count": 18,
+    "imbalance_ratio": 1.0,
+    "distribution": [
+      {
+        "label": "Luat",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Quan tri kinh doanh",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Marketing",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Bao chi va truyen thong",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Ke toan tai chinh",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Ngon ngu Anh",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Du lich va lu hanh",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Cong nghe thong tin",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Dieu duong",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Su pham",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Kien truc",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Ky thuat co khi",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Thiet ke do hoa",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "He thong thong tin quan ly",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      },
+      {
+        "label": "Khoa hoc du lieu",
+        "count": 18,
+        "ratio": 0.06666666666666667
+      }
+    ]
+  },
+  "low_frequency_categories": {
+    "so_thich_chinh": [],
+    "mon_hoc_yeu_thich": [],
+    "ky_nang_noi_bat": [],
+    "tinh_cach": [],
+    "moi_truong_lam_viec_mong_muon": [],
+    "muc_tieu_nghe_nghiep": []
+  },
+  "text_length": {
+    "mo_ta_ban_than": {
+      "min_words": 18,
+      "median_words": 26.0,
+      "max_words": 46,
+      "too_short_le_3_words": 0
+    },
+    "dinh_huong_tuong_lai": {
+      "min_words": 11,
+      "median_words": 14.0,
+      "max_words": 17,
+      "too_short_le_3_words": 0
+    }
+  },
+  "numeric_outliers": {},
+  "recommendations": [
+    "Khong phat hien van de nghiem trong. Nen tiep tuc theo doi metric macro-F1 sau moi lan cap nhat du lieu."
+  ]
+}
